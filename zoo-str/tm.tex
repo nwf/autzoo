@@ -1,0 +1,35 @@
+\paragraph{Turing Machine}
+A FSM augmented with an unbounded tape.  A model of arbitrary computation.
+
+Let $\Gamma$ denote the tape alphabet (with $\Sigma \subseteq \Gamma$), then
+$\config = \sts \times \mathbb{N} \times \Gamma^\mathbb{N}$, representing
+the FSM state, the current position on the tape, and the tape contents.%
+%
+\footnote{Unlike most of the other automata in the zoo, the input to a TM as
+defined here is not given character-by-character, but is encoded into the
+seed machine configuration.  Of course, an equivalent formulation, allowing
+the machine to await the next character of its input, is possible, but note
+that there remains some fundamental level of asynchrony -- the machine may
+compute without bound between requests for the next character.}
+
+$\delta$ is characterized by the type $\paren{\sts \times \Gamma} \to
+\paren{\sts \times \Gamma \times 3}$; the input $\Gamma$ is the symbol at
+the current position, while the output $\Gamma$ will be written there in the
+next configuration; the $3$ indicates a choice between incrementing,
+decrementing (if nonzero), or not changing the current position.%
+%
+\footnote{Attempting to decrease while at position $0$ is the same as a
+no-operation; again, we could have given a more precise characterization of
+$\delta$ with the attendant loss of clarity.  Note, however, that a machine
+with a tape indexed by $\mathbb{Z}$ has no such corner case and is equivalent
+to the presentation given here. \cite{post:1936}}
+
+\autinfo{
+    empty={Undecidable},
+    member={Semidecidable},
+    intersect={Yes},
+    regops={Yes},
+    kplus={Yes},
+    determinize={Yes, at exponential space and time cost},
+    minimize={No; the set of minimal TMs is not even recognizable.}
+}

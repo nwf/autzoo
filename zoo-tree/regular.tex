@@ -1,0 +1,27 @@
+Regular tree languages are tree automata without constraints with a finite
+$\config$ set, directly analagous to the finite string automata case.  They
+are typically presented as single-ply constructions, though this is not
+essential -- any multi-ply regular automaton has a weakly equivalent
+single-ply automaton, and the reverse direction is clearly trivial.
+
+Given a family of trees accepted by a regular tree automata, the set of
+strings formed by labels along paths in this set is a regular finite string
+language.  The same is true of accepting runs.
+
+For bottom-up automata, we have:
+\autinfo{
+  empty={Linear in the size of the automaton; \cite[Thm 1.7.4]{tata}},
+  member={ALOGTIME-complete; \cite[Thm 1.7.2]{tata}},
+  univ={PTIME for det. aut., EXPTIME for nondet. \cite[Thm 1.7.7]{tata}},
+  equiv={Product of sizes for det. aut., exponential for nondet. \cite[Thm 1.7.8]{tata}},
+  compl={Yes, but may require determinization; \cite[Thm 1.3.1]{tata}},
+  intersect={Yes, determinization not required; \cite[Thm 1.3.1]{tata}},
+  union={Yes; \cite[Thm 1.3.1]{tata}},
+  determinize={Yes; \cite[Thm 1.1.9]{tata}},
+}
+It is additionally possible to determine if an automaton accepts only a
+singleton set in PTIME.
+
+Non-deterministic top-down automata are equivalent to bottom-up automata
+\cite[Thm 1.6.1]{tata}, but deterministic top-down automata are weaker.
+\cite[Prop 1.6.2]{tata}.

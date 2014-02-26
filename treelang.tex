@@ -1,0 +1,24 @@
+\subsection{Ranked Tree Languages}
+
+Trees open some new possibilities and so we shall need some new notation and
+a new set of operations.  For an excellent and thourough introduction, see
+\cite[Preliminaries]{tata}.  We limit ourselves here to a quick summary.
+
+A {\em ranked} tree language $L$ is a set of finite trees over some
+\defn{signature} (also \defn{ranked alphabet}) $\Sigma$, with arity function
+$\mbox{ar} : \Sigma \to \mathbb{N}$.  Every node of a tree labeled with
+$\sigma \in \Sigma$ has exactly $\mbox{ar}\paren{\sigma}$-many children.%
+%
+\footnote{More formally, a ranked tree language is a subset of the carrier
+of the free algebra over $\paren{\Sigma,\mbox{ar}}$.} We use
+$\mathcal{T}(\Sigma,\mbox{ar})$ for such a set of ranked trees; often
+$\mbox{ar}$ will be implicit and we will just write $\mathcal{T}(\Sigma)$.
+We use the notation $\mathcal{T}(\Sigma \sqcup X)$ to mean the set of trees
+whose labels come either from $\Sigma$ (with the appropriate arity) or a
+(disjoint) set of ``variables'' $X$, with $\mbox{ar}(x \in X) \defeq 0$.
+The notation $\mathcal{T}(\Sigma \times \mathcal{Q})$ will be used for trees
+whose labels are pairs of elements from $\Sigma$ and $\mathcal{Q}$; we
+define $\mbox{ar}(\sigma \times q \in \Sigma \times \mathcal{Q}) \defeq
+\mbox{ar}(\sigma)$.
+
+The set-theoretic operations carry over as might be expected.

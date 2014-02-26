@@ -1,0 +1,9 @@
+There are several classes of automata which fall under the label ``nested
+stack automata'', so we find it useful to say a few words in common, despite
+the differing decision and closure properties.
+
+A nested stack automaton is a \hyperref[sec:zoo-str/stack]{stack automaton}
+where the elements of the stack, $\Gamma$, are themselves stacks.  (\ie
+$\Gamma = \Gamma'^*$.)  In all cases, the transition function is permitted
+to push or pop from the ``outer'' stack and/or the top-most inner stack,
+even if it may read more widely.

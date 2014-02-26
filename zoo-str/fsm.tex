@@ -1,0 +1,104 @@
+Also called finite-state acceptor, or just state machine.  Everyones'
+favorite and simplest automaton family.
+
+Deterministic FSMs are completely characterized by a state set, typically
+denoted $\mathcal{Q}$, an initial state $q_0 \in \mathcal{Q}$, and a set of
+accepting states, $\mathcal{Q}_f \subseteq \mathcal{Q}$.  (In our notation,
+we have $\mathcal{C} = \mathcal{Q}$, $c_0 = q_0$, and $\mathcal{C}_f =
+\mathcal{Q}_f$.)  $\delta$ simply selects the new state of the machine.
+
+A deterministic FSM (``DFA'') may be rendered as a directed graph whose
+vertices are the elements of $\mathcal{Q}$ and whose edges are labeled with
+characters of $\Sigma$.  $\delta$ may be read off from the graph by finding
+the input configuration and following the (unique!) edge labeled by the
+input character to the output configuration.
+
+Nondeterministic FSMs (``NFA''s) have a similar graphical rendering, save
+that some edges may be labeled with the empty string $\epsilon$.  The output
+of $\delta$ given $(c_i, s)$ is the set of all nodes reachable from $c_i$ by
+following a path composed of any number (possibly zero) $\epsilon$-edges,
+exactly one $s$-edge, and then any number of $\epsilon$ edges.%
+%
+\footnote{Computationally, however, faster algorithms exist that perform
+only one of the two $\epsilon$-closure stages suggested here.  Typically,
+one will traverse only paths labeled by $s\epsilon^*$, having initialized
+with $C_0$ as the $\epsilon$ closure of $Q_0$.} For convenience, one will
+often see nondeterministic FSMs with initial state {\em sets}; these are
+equivalent to a designated single state and $\epsilon$-edges.
+
+See \href{http://wikipedia.org/Finite-state\_Machine}{Wikipedia's treatment}
+or \cite[Ch. 1]{sipser:theorycomp} for thourough introductions.
+
+FSMs' recognition corresponds exactly with
+\href{http://wikipedia.org/Regular\_language}{regular languages} and as such
+they are closed under all regular operations.
+
+\autinfo{
+    empty={Yes; $O(v \log v + e \log e)$
+           to test reachability of accepting states. \cite{xxx}},
+    member={Yes; $O(n)$ in length of input. \cite{xxx}},
+    subset={Yes (by implication);
+            complementation avoidable in some cases \cite{abdulla:simantichain}},
+%
+    compl={Yes; take as accepting states $\sts \setminus \stsf$ \cite{xxx}},
+%
+    intersect={Yes; cross-product construction},
+    union={Yes; cross-product construction for DFA, trivial for NFA},
+%
+    kstar={Yes; $O\paren{\abs{Q_f} + \abs{Q_i}}$ changes to the machine \cite{xxx}},
+    kplus={Yes; $O\paren{\abs{Q_f}}$ changes to the machine \cite{xxx}},
+%
+    reginter={Yes, by definition},
+%
+    determinize={Yes; at possible exponential space cost. \cite{xxx}}
+}
+
+\subsection{Probabilistic Finite State Automata}
+
+\cite{vidal:pfsm} provides an excellent overview of FSMs weighted with
+probabilities.  (Unless otherwise indicated, cross-references in this section
+refer to that paper.)  The authors distinguish several classes:
+%
+\begin{itemize}
+%
+  \item ``Probabilistic Finite-State Automata'' (PFA, \S2.2)
+%
+  \item ``Acyclic PFA`` (APFA, \S2.2)
+%
+  \item ``$\lambda$-PFA'' (\S2.3)
+%
+  \item ``Deterministic Probabilistic Finite-State Automata'' (DPFA, \S2.4)
+%
+\end{itemize}
+PFA are non-deterministic but do not permit empty-label transitions.
+$\lambda$-PFA permit empty-label transitions, easing certain constructions,
+but are expressively equivalent to PFA (\S4.3).  DPFA are less expressive
+(prop. 10) but more readily analysed.
+
+If we ignore the probabilistic annotations, these automata are equivalent to
+\hyperref[sec:zoo-str/fsm]{FSM}s.  Therefore, in the tables below, we mean
+to test not just the set of strings but the {\em distribution} of strings.
+In the case of membership testing, we instead wish to know the
+probability assigned to a string.  For unions, we mean the pointwise-mean
+of the two distributions (def. 10), while for intersection we mean {\em
+coemmision probability} (the pointwise product of the distributions).
+
+For ($\lambda$-)PFA, we have:
+\autinfo{
+  member={Yes, $O(n\abs{\sts})$.},
+  determinize={No; \S4.1; prop 10.}
+}
+While for DPFA, we have:
+\autinfo{
+  member={Yes; $O(n)$ in the length of the input.},
+  union={No; \S4.2, prop 9 and appendix A.},
+  intersect={Yes; \S5},
+  minimize={Yes; \S4.1; see \cite{carrasco:learndetreg} and \cite{mohri:fstlsp}}
+}
+
+\Note{These tables are quite sparsely populated; some entries are trivial,
+while some I've probably overlooked in the paper.}
+
+\subsection{Probabilistic Finite State Transducers}
+
+\Note{Pull from \cite{pereira:wfst}.}

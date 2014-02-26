@@ -1,0 +1,252 @@
+% Recommend building with
+% latexmk -pdf main.tex
+
+\documentclass[letterpaper]{article}
+
+\DeclareSymbolFont{AMSb}{U}{msb}{m}{n}
+\DeclareMathAlphabet{\mathsc}{T1}{cmr}{m}{sc}
+\SetMathAlphabet{\mathsc}{bold}{T1}{cmr}{bx}{sc} % sigh
+
+\title{An Automata Zoo%
+%
+\footnote{The source to this document is available under the terms of the
+GNU Affero Public License version 3 (see {\tt COPYING} beside the main file,
+or \url{http://www.gnu.org/licenses/agpl-3.0.txt}) or any later version.}}
+
+\author{Nathaniel Wesley Filardo}
+
+\usepackage{fullpage}
+\usepackage{xcolor}
+\usepackage{amsmath,amssymb,latexsym}
+\usepackage{keyval}
+\usepackage{graphicx}
+\usepackage{xspace}
+\usepackage{etoolbox}
+\usepackage[color,all]{xypic}
+\usepackage{calc}
+\usepackage{subfig}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{proof}
+\usepackage{qtree}
+\usepackage{listings}
+	\lstloadlanguages{Haskell}
+\usepackage{floatrow}
+\usepackage{caption}
+\usepackage{comment}
+   % http://stackoverflow.com/questions/2193307/how-to-get-latex-to-hyphenate-a-word-that-contains-a-dash
+\usepackage[shortcuts]{extdash}
+\usepackage{pifont}
+\usepackage{stmaryrd}
+\usepackage{bold-extra}
+\usepackage{xspace}
+\usepackage{tabu}
+\usepackage{natbib}
+\usepackage{hyperref}
+
+\usepackage[xindy,toc]{glossaries}	% AFTER: hyperref
+
+% Do something clever with line numbers, since we cite them all the time.
+\newcommand{\lineref}[2]{\hyperref[lst:#1:#2]{Line \ref{lst:#1}:\ref{lst:#1:#2}}}
+
+% Figure drawing stuff
+\newlength\templena
+\newlength\templenb
+\newsavebox{\tempboxa}
+\newsavebox{\tempboxb}
+\newsavebox{\tempboxc}
+\newsavebox{\tempboxd}
+\newsavebox{\tempboxe}
+
+\definecolor{lightred}{rgb}{1,.25,.25}
+
+% Math
+\newcommand{\defeq}{\stackrel{\mbox{\tiny def}}{=}}
+
+%\newcounter{rllstctr}
+%\newcommand{\rllstctrautorefname}{L.}
+\newsavebox\rllstboxa
+\newsavebox\rllstboxb
+\newlength\rllstlenl
+\newlength\rllstlenr
+\lstnewenvironment{rllst}[1][]
+{
+\lstset{#1}
+\setbox\rllstboxa=\hbox\bgroup
+}
+{
+\egroup
+% \refstepcounter{rllstctr}   % OLD - SEPARATE COUNTER FOR RLL LISTINGS
+\refstepcounter{equation}	 % NEW - JUST USE EQUATION COUNTER
+\label{rll:\lstname}
+% \setbox\rllstboxb=\hbox{(L. \arabic{rllstctr})}  % OLD - MARK AS (L. 3)
+\setbox\rllstboxb=\hbox{(\arabic{equation})}	   % NEW - MARK AS (3)
+\trivlist\item
+\setlength{\rllstlenl}{\linewidth/2-\wd\rllstboxa/2}
+\setlength{\rllstlenr}{\linewidth/2-\wd\rllstboxa/2-\wd\rllstboxb}
+\hspace{\rllstlenl}\usebox{\rllstboxa}\hspace{\rllstlenr}\usebox{\rllstboxb}
+\relax\endtrivlist
+}
+
+\newcommand{\eqnref}[1]{\hyperref[eqn:#1]{(\ref{eqn:#1})}}
+\newcommand{\Figref}[1]{\hyperref[fig:#1]{Figure~\ref{fig:#1}}}
+\newcommand{\ftnref}[1]{footnote~\hyperref[ftn:#1]{\ref{ftn:#1}}}   % highlight only the footnote #
+\newcommand{\rllref}[1]{\hyperref[rll:#1]{(\ref{rll:#1})}}
+\newcommand{\secref}[1]{\hyperref[sec:#1]{\S~\ref{sec:#1}}}
+\newcommand{\Tabref}[1]{\hyperref[tab:#1]{Table~\ref{tab:#1}}}
+
+\newcommand{\paren}[1]{\left(#1\right)}
+\newcommand{\brak}[1]{\left[#1\right]}
+\newcommand{\abs}[1]{\left\lvert#1\right\rvert}
+\newcommand{\set}[1]{\left\{#1\right\}}
+\newcommand{\pair}[2]{\langle#1,#2\rangle}
+\newcommand{\expect}[1]{\left\langle#1\right\rangle}
+\newcommand{\sem}[1]{\left\llbracket #1\right\rrbracket}
+
+\newcommand{\pset}[1]{\mathcal{P}\paren{#1}}
+
+\makeatletter
+\define@key{autinfo}{member}     {\def\autmember {#1}}
+\define@key{autinfo}{empty}      {\def\autempty  {#1}}
+\define@key{autinfo}{univ}       {\def\autuniv   {#1}}
+\define@key{autinfo}{equiv}      {\def\autequiv  {#1}}
+\define@key{autinfo}{subset}     {\def\autsubset {#1}}
+\define@key{autinfo}{disjoin}    {\def\autdisjoin{#1}}
+
+\define@key{autinfo}{determinize}{\def\autmiscdet{#1}}
+\define@key{autinfo}{minimize}   {\def\autmiscmin{#1}}
+\define@key{autinfo}{compl}      {\def\autcompl  {#1}}
+\define@key{autinfo}{relcompl}   {\def\autrelcomp{#1}}
+\define@key{autinfo}{intersect}  {\def\autregintr{#1}}   % regular
+\define@key{autinfo}{union}      {\def\autregun  {#1}}   % regular
+\define@key{autinfo}{kstar}      {\def\autregkstr{#1}}   % regular
+\define@key{autinfo}{kplus}      {\def\autregkpls{#1}}
+\define@key{autinfo}{efhom}      {\def\autabsehom{#1}}   % trio
+\define@key{autinfo}{invhom}     {\def\autabsmoh {#1}}   % trio
+\define@key{autinfo}{reginter}   {\def\autabsregi{#1}}   % trio
+\define@key{autinfo}{hom}        {\def\autabshom {#1}}   % full trio
+
+\define@key{autinfo}{regops}     {\def\autregintr{#1}    % all regops at once
+                                  \def\autregun  {#1}
+                                  \def\autregkstr{#1}}
+
+\define@key{autinfo}{trio}       {\def\autabsehom{#1}    % all trio ops at once
+                                  \def\autabsmoh {#1}
+                                  \def\autabsregi{#1}}
+
+\define@key{autinfo}{fulltrio}   {\def\autabshom {#1}    % all full trio ops at once
+                                  \def\autabsmoh {#1}
+                                  \def\autabsregi{#1}}
+
+\def\autinfo{\@ifnextchar[\autinfo@{\autinfo@[]}}	% handle opt. arg.
+\def\autinfo@[#1]#2{%
+	\def\autmember {}
+	\def\autempty  {}
+	\def\autuniv   {}
+	\def\autequiv  {}
+	\def\autsubset {}
+	\def\autdisjoin{}
+	\def\autmiscdet{}
+	\def\autmiscmin{}
+	\def\autcompl  {}
+	\def\autrelcomp{}
+	\def\autregintr{}
+	\def\autregun  {}
+	\def\autregkstr{}
+	\def\autregkpls{}
+	\def\autabsehom{}
+	\def\autabsmoh {}
+	\def\autabsregi{}
+	\def\autabshom {}
+
+	\setkeys{autinfo}{#2}
+	{\centering
+	\begin{longtabu}{|X[l]|X[2,l]|} \hline
+		\textbf{Decision Predicates} & \\ \hline
+		\ifdefempty{\autmember} {}{Membership testing   & \autmember  \\ \hline}
+		\ifdefempty{\autempty}  {}{Emptiness            & \autempty   \\ \hline}
+        \ifdefempty{\autuniv}   {}{Universality         & \autuniv    \\ \hline}
+		\ifdefempty{\autequiv}  {}{Equivalence          & \autequiv   \\ \hline}
+		\ifdefempty{\autsubset} {}{Subset               & \autsubset  \\ \hline}
+		\ifdefempty{\autdisjoin}{}{Disjointness         & \autsubset  \\ \hline}
+		\textbf{Closure Properties} & \\ \hline
+		\ifdefempty{\autregkstr}{}{Kleene star          & \autregkstr \\ \hline}
+		\ifdefempty{\autregkpls}{}{Kleene plus          & \autregkpls \\ \hline}
+		\ifdefempty{\autcompl}  {}{General Complement   & \autcompl   \\ \hline}
+		\ifdefempty{\autrelcomp}{}{Relative Complement  & \autrelcomp \\ \hline}
+		\ifdefempty{\autregintr}{}{Intersection         & \autregintr \\ \hline}
+		\ifdefempty{\autregun  }{}{Union                & \autregun   \\ \hline}
+		\ifdefempty{\autabsmoh} {}{Inverse Hom.         & \autabsmoh  \\ \hline}
+		\ifdefempty{\autabshom} {}{Arbitrary Hom.       & \autabshom  \\ \hline}
+		\ifdefempty{\autabsehom}{}{$\epsilon$-free Hom. & \autabsehom \\ \hline}
+        \ifdefempty{\autabsregi}{}{Intersect reg. lang. & \autabsregi \\ \hline}
+		\textbf{Automata Operations} & \\ \hline
+		\ifdefempty{\autmiscdet}{}{Determinizable       & \autmiscdet \\ \hline}
+		\ifdefempty{\autmiscmin}{}{Minimizable          & \autmiscmin \\ \hline}
+	\end{longtabu}
+	}
+}
+\makeatother
+
+\newcommand{\socalled}[1]{``#1''}
+\newcommand{\latin}[1]{#1} % Style guide says not to italicize
+						   % common latin, since it needlessly draws
+						   % attention to unimportant text
+
+\newcommand{\eg}{\latin{e.g.}, }
+\newcommand{\ie}{\latin{i.e.}, }
+\newcommand{\etc}{\latin{etc}\.}
+\newcommand{\etal}{\latin{et al}\.}
+\newcommand{\apriori}{\latin{a priori}\xspace}
+\newcommand{\perse}{\latin{per se}\xspace}
+
+\newcommand{\defn}[1]{{\boldmath\bfseries #1}}
+\newcommand{\config}{{\ensuremath\mathcal{C}}}
+\newcommand{\alang}[1]{\mathcal{L}\paren{#1}}
+\newcommand{\sts}{\ensuremath\mathcal{Q}}
+\newcommand{\stsf}{\ensuremath\mathcal{Q}_f}
+\newcommand{\stsi}{\ensuremath\mathcal{Q}_i}
+
+\newcommand{\maininclude}[2]{\section{#1} \label{sec:#2} \input{#2}}
+
+\newcommand{\Note}[1]{}
+\renewcommand{\Note}[1]{{\large\textcolor{red}{\textbf{[#1]}}}}
+\newcommand{\NoteNWF}[1]{\Note{#1 --NWF}}
+
+\input{glossary}
+\makeglossaries
+
+\begin{document}
+
+\maketitle
+
+
+\part{Finite Strings}
+\maininclude{Languages}{strlang}
+\maininclude{Automata Overview}{strautintro}
+\maininclude{Finite-state Machine}{zoo-str/fsm}
+\maininclude{Push-down Automata}{zoo-str/pda}
+\maininclude{Stack Automata}{zoo-str/stack}
+\maininclude{Nested Stack Automata}{zoo-str/nested-stack}
+\maininclude{Turing Machine}{zoo-str/tm}
+
+%\part{Infinite Strings}
+
+\part{Finite Trees}
+\maininclude{Languages}{treelang}
+\maininclude{Automata Overview}{treeautintro}
+\maininclude{Regular Tree Automata}{zoo-tree/regular}
+\maininclude{(Dis)Equality-Constrained Tree Automata}{zoo-tree/awedc}
+\maininclude{Constraints Between Brothers}{zoo-tree/awcbb}
+\maininclude{Reduction Automata}{zoo-tree/ra}
+\maininclude{Homomorphism-Equality Automata}{zoo-tree/tahom}
+
+%\part{Infinite Trees}
+
+\appendix
+\bibliographystyle{abbrvnat}
+\bibliography{biblio}
+%\printindex
+\glsaddall
+\printglossaries
+\end{document}

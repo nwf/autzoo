@@ -1,0 +1,55 @@
+A string language $L$ is a set of finite strings over some alphabet
+$\Sigma$.%
+%
+\footnote{More formally, it is a subset of the underlying set of the free
+monoid of $\Sigma$.  Following the literature, we tend to suppress writing
+the forgetful functor, and simply refer to the set as $\Sigma^*$.}
+%
+For example, if $\Sigma = \set{a,b}$, then ``the string $a$'', ``the set of
+strings with an even number of $a$s and an odd number of $b$s (and no other
+characters)'', and ``all strings composed of $x$ many $a$s, $y$ many $b$s,
+then $x*y$ more $a$s'' are all languages over $\Sigma$.
+
+We may define string languages in terms of other string languages by
+\begin{enumerate}
+    \item \label{lang:str:ops:set} Set theoretic operations:
+        \begin{enumerate}
+            \item Intersection:
+                $L_1 \cap L_2 \defeq \set{ s \middle\vert s \in L_1 ~\wedge~ s \in L_2 }$
+            \item Union:
+                $L_1 \cup L_2 \defeq \set{ s \middle\vert s \in L_1 ~\vee~ s \in L_2 }$
+            \item Relative complement:
+                $L_1 \setminus L_2 \defeq \set{s \middle\vert s \in L_1 ~\wedge~ s \not\in L_2 }$
+            \item (General) complement, $L^C$: the set of strings over $\Sigma$
+                which are not in $L$.  We might write this as
+                $F_\text{mon}\Sigma \setminus L$ or $\Sigma^* \setminus L$
+                (see below).
+
+        \end{enumerate}
+    \item \label{lang:str:ops:kleene} Keene's operators:
+        \begin{enumerate}
+            \item Kleene plus: $L^+ \defeq \set{ s \cdot t \middle\vert s \in L ~\wedge~ t \in L^+ }$
+            \item Kleene star: $L^* \defeq L^+ \cup \set{ \epsilon }$, where
+$\epsilon$ represents the empty string.%
+%
+\footnote{The empty string is the identity of the string concatenation operator.
+Some other texts use $\lambda$ for this purpose.}
+%
+\footnote{Many newcomers trip over the distinction between ``the empty string is
+in the language'' ($\epsilon \in L$) and ``the language is empty'' ($L =
+\emptyset$).}
+        \end{enumerate}
+    \item \label{lang:str:ops:hom} Homomorphic operations:
+        \begin{enumerate}
+            \item Homomorphism: $h(L) \defeq \set{ h(s) \middle\vert s \in L}$
+                where $h(\epsilon) = \epsilon$ and $\forall_{s,t} . h(s \cdot t) = h(s) \cdot h(t)$.
+            \item $\epsilon$-free homomorphism, for $h$ which
+                additionally satisfies $\forall_{s \ne \epsilon} . h(s) \ne \epsilon$.
+            \item Inverse homomorphism: $h^{-1}(L) \defeq \set{ s \middle\vert h(s) \in L}$
+        \end{enumerate}
+    \item Miscellaneous operations:
+        \begin{enumerate}
+            \item Concatenation: $L_1 \cdot L_2 \defeq \set{ s \cdot t \middle\vert s \in L_1 ~\wedge~ t \in L_2}$
+            \item Reversal: $L^R \defeq \set{ c_1 \ldots c_n \middle\vert c_i \in \Sigma ~\wedge~ c_n \ldots c_1 \in L }$
+        \end{enumerate}
+\end{enumerate}
