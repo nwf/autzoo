@@ -53,13 +53,14 @@ An important subclass of tree automata are the \defn{single-ply} automata,
 where $\delta$ is restricted to manipulation of trees of the form
 $\mathcal{T}(\Sigma_+ \sqcup \config)$.
 
-\subsection{Constraints}
+\subsection{Local Constraints}
 
 A natural novelty of tree automata is one of {\em constraints} between
-positions in a (sub)tree.  In general, one can think of such constraints as
-including $\mathcal{T}(\Sigma)$ as a projection of $\config$, though with
-restricted handling within the transition function,\eg only comparison for
-(dis)equality.
+positions in a (sub)tree.  One way of inducing such constraints is to
+augment the transition function, inducing {\em local} tests in the tree; one
+can think of this as including $\mathcal{T}(\Sigma)$ as a projection of
+$\config$, though with restricted handling within the transition
+function,\eg only comparison for (dis)equality.
 
 The \defn{constraint path} is the concatenation of the paths between the
 {\em labeled node whose labeling introduced the constraint} and the
@@ -105,6 +106,10 @@ Opaque; this is not true of multi-ply automata, as there may be crossing
 constraints within a single multi-ply transition.
 
 In general, Contained and Stated together imply Opaque.
+
+In a deterministic automaton, satisfiable equality constraints referencing
+labeled nodes are necessarily $f$-Same-Stated (for all $f$) as equal trees
+produce equal runs.
 
 \subsection{Transducers}
 
