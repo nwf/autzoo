@@ -1,0 +1,34 @@
+Rigid Tree Automata (RTA) are introduced by \cite{jacquemard:rta}.
+
+An RTA has a distinguished set of configurations, $R \subseteq \config$, and
+imposes the global constraint (Def. 2) that $\forall_{p_1,p_2} . \brak{
+r(p_1) = r(p_2) \in R } \Rightarrow t\vert_{p_1} = t\vert_{p_2}$.  (That is,
+for each configuration $r \in R$, all nodes in the run labeled with $r$ must
+root equal sub-trees.)
+
+
+\subsection{Relation to other classes}
+RTA are a strict sub-class of TAGED (\autoref{sec:zoo-tree/taged}; Sec. 3.1) but are a
+super-class of TAGED+ (at possible exponential complexity; see Prop. 2 and
+\cite{filiot:tagc}).
+
+\Note{Other classes also discussed in Sec. 3: TAC, DAG automata, TA1M,
+ACRV.}
+
+Deterministic RTA are a strict sub-class of RTA (Thm. 4) but strictly
+include TA without constraints (Thm. 5).
+
+\autinfo{
+  empty={Linear time; Sec. 6.1},
+  member={NP-complete; Sec. 6.2},
+  univ={No; Sec. 6.4},
+  finite={PTIME; Sec 6.6},
+%
+  compl={No; Sec. 4.2},
+  determinize={No; Sec. 5.1},
+%
+  equiv={No; Sec. 6.5},
+%
+  union={Linear time and space; Sec. 4.1},
+  intersect={Exponential time and space; Sec. 4.1},
+}
