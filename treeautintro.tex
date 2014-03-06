@@ -62,6 +62,11 @@ can think of this as including $\mathcal{T}(\Sigma)$ as a projection of
 $\config$, though with restricted handling within the transition
 function,\eg only comparison for (dis)equality.
 
+We view a locally constrained automaton as a transition function which
+performs a series of tests as part of its transition function {\em after
+pattern matching}, meaning that it may be expressed as a (possibly infinite)
+union of transitions of the form $\mathcal{T}(\Sigma \sqcup \config)
+\stackrel{c}{\longrightarrow} \config$, where $c$ is a set of constraints.
 The \defn{constraint path} is the concatenation of the paths between the
 {\em labeled node whose labeling introduced the constraint} and the
 constrained positions.
@@ -90,13 +95,15 @@ c$, strictly if the transition between $t$ and $c$ induces any constraints.
 \subparagraph{Deep-Reduction} As above, but strictness is implied only when,
 additionally, a position referenced by a constraint would be non-Contained.
 
-\paragraph{Stated} All positions constrained must be labeled with a
+\paragraph{Stated} All positions constrained must be labeled with some 
 $\config$.
 
-\subparagraph{$f$-Same-Stated} In addition to the above, all positions
-mutually constrained must be labeled and the $f$-image of these
-configurations must be identical.  When $f$ is the identity function or
-otherwise clear from context, we may simply say ``Same-Stated''.
+\subparagraph{$f$-Same-Stated} All positions mutually constrained must be
+labeled (as above) and further the $f$-image of these configurations must be
+identical.  (That is, the pattern of $\mathcal{T}(\Sigma \sqcup \config)$
+matched by a transition must be sufficient to ensure that all constraint
+paths end in equal-$f$-image nodes of the run.)  When $f$ is the identity
+function or otherwise clear from context, we may simply say ``Same-Stated''.
 
 \subsubsection{Interrelation of Metaconstraints}
 
