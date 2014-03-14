@@ -1,0 +1,70 @@
+An extension of the non-deterministic PDA \autoref{sec:zoo-str/pda}
+introduced by \cite{aho:pa}, pushdown assemblers have a (non-empty) stack
+whose entries are a tuple of a symbol and $k$-many string registers.  A PA
+has four sets of symbols used during its computation: states
+($\mathcal{Q}$), input symbols ($\Sigma$), output symbols ($\Delta$), and
+stack (``tape'') symbols ($\Gamma$).  Let $\phi$ denote a symbol disjoint
+from all of these sets, and let $Q_0 \in \mathcal{Q}$ and $Z_0 \in \Gamma$
+be the initial state and stack symbol.
+
+For this family, the machine is described by a state and the contents of the
+stack, which is a string of stack symbols and per-slot registers: $\config =
+\mathcal{Q} \times \paren{1 + \Delta^*} \times \paren{ \Gamma \times
+\paren{\Delta^* + \phi}^k }^+$.  The initial $\config_0 = Q_0 \times \inl{1}
+\times \brak{Z_0 \times \phi^k}$.
+
+The transition function is characterized by the union of three functions,
+all of which are given the same visibility into $\config$, namely the state,
+optionally the next input symbol, and the top of the stack.  These functions
+are
+%
+\begin{itemize}
+%
+	\item[$\lambda$] of type $\mathcal{Q} \times \paren{\Sigma + 1} \times
+	\Gamma \to \mathcal{P}\brak{ \mathcal{Q} \times \Gamma^* }$
+%
+	\item[$\mu$] of type $\mathcal{Q} \times \paren{\Sigma + 1} \times
+	\Gamma \to \mathcal{P}\brak{ \mathcal{Q} \times \Delta^* \times
+	\set{1,\ldots,k} }$
+%
+	\item[$\nu$] of type $\mathcal{Q} \times \paren{\Sigma + 1} \times
+	\Gamma \to \mathcal{P}\brak{ \mathcal{Q} \set{1,\ldots,k} }$
+%
+\end{itemize}
+%
+These functions collectively define the transitions between configurations
+$c = q \times w \times \paren{Z\brak{x_1,\ldots,x_k}}\alpha$ and $c' \in
+\delta\paren{c \times a}$ (where $q \in \mathcal{Q}$ is the state of the
+machine, $w \in 1 + \Delta^*$, $Z\brak{x_1,\ldots,x_k}$ with $Z \in \Gamma$
+and $x_i \in \Delta^* + \phi$ is the head of the stack, $\alpha$ the
+remainder, and $a \in \Sigma + 1$ the next input symbol or the empty string)
+is as follows (see \cite[p.  48]{aho:pa}):
+%
+\begin{align*}
+	% \lambda non-\epsilon output
+	q'\times \inl{1} \times \paren{K_1\brak{\phi^k} \ldots K_n\brak{\phi^k} \alpha} \in\delta (c \times a)
+%
+	&\Leftarrow q' \times \paren{K_1 \ldots K_n} \in \lambda\paren{q,a, Z} \wedge w = \inl{1} \wedge n \ge 1 \\
+%
+	% \lambda \epsilon output
+	q'\times \inr{\paren{x_1 \ldots x_k}} \times \alpha \in \delta (c \times a)
+%
+	&\Leftarrow q' \times \epsilon \in \lambda\paren{q,a, Z} \wedge w = \inl{1} \\
+%
+	% \nu
+	q'\times \inl{1} \times \paren{Z\brak{x_1,\ldots,x_{i-1},x,x_{i+1},\ldots,x_k}\alpha} \in\delta (c \times a)
+%
+	&\Leftarrow q' \times i \in \nu\paren{q,a, Z} \wedge w = \inr{w'} \wedge x_i = \phi \\
+%
+	% \mu
+	q'\times \inl{1} \times \paren{Z\brak{x_1,\ldots,x_{i-1},y,x_{i+1},\ldots,x_k}\alpha} \in\delta (c \times a)
+%
+	&\Leftarrow q' \times y \times i \in \mu\paren{q,a, Z} \wedge w = \inl{1} \wedge x_i = \phi
+%
+\end{align*}
+%
+That is, $\lambda$ serves two roles: to push new $\Gamma$ to the stack or to
+concatinate registers into a distinguished placeholder.  $\nu$ serves to
+consume that placeholder, placing it into a top-of-stack register (all other
+rules are blocked if the placeholder is nonempty).  $\mu$ allows insertion
+of strings into top-of-stack registers.
