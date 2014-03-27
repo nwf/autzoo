@@ -1,0 +1,20 @@
+Also called ``Automata With Equality and Disequality Constraints'' (AWEDC),
+this class of automata augments regular tree automata with the ability to
+require (dis)equality of positions in accepted trees, using local
+constraints.  In general, the configuration space of these machines is
+$\config = \mathcal{Q} \times \mathcal{T}(\Sigma)$ for states $\mathcal{Q}$
+and input alphabet $\Sigma$; however, $\delta$ is constrained as outlined in
+\autoref{sec:treeaut:con:loc} to only perform comparisons within the tree
+structure; it may not compare against external trees.  The automata is
+accepting when the root node of a run is labeled by a configuration whose
+first component is in a set of accepting states, $\mathcal{Q}_f$.  See
+\cite[Sec 4.2]{tata} for details.
+
+\autinfo{
+  member={Yes; PTIME (linear for deterministic) \cite[Prop 4.2.9]{tata}},
+  empty={Undecidable by reduction of PCP; \cite[Thm 4.2.10]{tata}},
+  compl={Yes; \cite[Prop 4.2.8]{tata}},
+  union={Yes; linear time and space \cite[Prop 4.2.8]{tata}},
+  intersect={Yes; quadratic time and space \cite[Prop 4.2.8]{tata}},
+  determinize={Yes; exponential space cost \cite[Prop 4.2.6]{tata}}
+}

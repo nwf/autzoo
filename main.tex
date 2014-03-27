@@ -130,6 +130,9 @@ or \url{http://www.gnu.org/licenses/agpl-3.0.txt}) or any later version.}}
 \define@key{autinfo}{reginter}   {\def\autabsregi{#1}}   % trio
 \define@key{autinfo}{hom}        {\def\autabshom {#1}}   % full trio
 
+\define@key{autinfo}{cylind}     {\def\autcylind {#1}}
+\define@key{autinfo}{proj}       {\def\autproj   {#1}}
+
 \define@key{autinfo}{regops}     {\def\autregintr{#1}    % all regops at once
                                   \def\autregun  {#1}
                                   \def\autregkstr{#1}}
@@ -163,6 +166,8 @@ or \url{http://www.gnu.org/licenses/agpl-3.0.txt}) or any later version.}}
 	\def\autabsmoh {}
 	\def\autabsregi{}
 	\def\autabshom {}
+	\def\autcylind {}
+	\def\autproj   {}
 
 	\setkeys{autinfo}{#2}
 	{\centering
@@ -187,6 +192,8 @@ or \url{http://www.gnu.org/licenses/agpl-3.0.txt}) or any later version.}}
 		\ifdefempty{\autabshom} {}{Arbitrary Hom.       & \autabshom  \\ \hline}
 		\ifdefempty{\autabsehom}{}{$\epsilon$-free Hom. & \autabsehom \\ \hline}
         \ifdefempty{\autabsregi}{}{Intersect reg. lang. & \autabsregi \\ \hline}
+        \ifdefempty{\autcylind }{}{Cylindrification     & \autcylind  \\ \hline}
+        \ifdefempty{\autproj   }{}{Projection           & \autproj    \\ \hline}
 		\textbf{Automata Operations} & \\ \hline
 		\ifdefempty{\autmiscdet}{}{Determinizable       & \autmiscdet \\ \hline}
 		\ifdefempty{\autmiscmin}{}{Minimizable          & \autmiscmin \\ \hline}

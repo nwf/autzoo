@@ -61,6 +61,11 @@ An important subclass of tree automata are the \defn{single-ply} automata,
 where $\delta$ is restricted to manipulation of trees of the form
 $\mathcal{T}(\Sigma_+ \sqcup \config)$.
 
+% \subsection{New Operations: Cylindrification and Projection}
+% 
+% Originally defined for automata operating on tuples of trees \cite[Sec
+% 3.2.4]{tata} 
+
 \subsection{Local Constraints}
 \label{sec:treeaut:con:loc}
 
@@ -82,16 +87,18 @@ constrained positions.
 
 \subsubsection{Metaconstraints}
 
-In general, tree automata with arbitrary constraints have very poor closure
-properties (see \autoref{xxx}).  A variety of restrictions have been
-developed throughout the literature and are summarized here.
+In general, tree automata with arbitrary local constraints have undecidable
+decision procedures (see \autoref{sec:zoo-tree/awedc}).  A variety of
+restrictions have been developed throughout the literature and are
+summarized here.
 
 \paragraph{Brothers} The transition function may only mutually constrain
 positions which differ only in the last index.
 
 \paragraph{Contained} All positions tested for equality must be within the
 fragment of the tree being labeled (or generated); that is, constraint paths
-may not involve a $\config$-labeled run node other than at their apex.
+may not involve a $\config$-labeled run node other than at their apex and
+endpoints.
 
 \paragraph{Opaque} If a position is constrained by a transition, no other
 constraint path may cross this position. 

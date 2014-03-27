@@ -6,7 +6,15 @@ single-ply automaton, and the reverse direction is clearly trivial.
 
 Given a family of trees accepted by a regular tree automata, the set of
 strings formed by labels along paths in this set is a regular finite string
-language.  The same is true of accepting runs.
+language.  The same is true of accepting runs.  The set of strings formed by
+leaves of a regular tree automata (its ``leaf language'') is a context-free
+language; dually, every context-free language is the leaf language of some
+regular tree automaton.%
+%
+\footnote{While intersection of two context free language is undecidable
+(see \autoref{sec:zoo-str/pda-nd}), the intersection of regular tree languages
+is decidable: the leaf language of the intersection of two regular tree
+languages is a {\em subset} of the intersection of their leaf languages.}
 
 For bottom-up automata, we have:
 \autinfo{

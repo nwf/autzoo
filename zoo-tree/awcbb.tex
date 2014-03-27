@@ -1,2 +1,13 @@
-\Note{AWCBB is single-ply AWEDC subject to Brother and Contained
-metaconstraints (and, by implication, Opaque and Stated).}
+AWCBB is a sub-class of AWEDC wherein all transitions are single-ply and all
+(dis)equalities adhere to the Brother and Contained metaconstraints (by
+implication, they are also Opaque and Stated).  See \cite[Sec 4.3]{tata}.
+
+\autinfo{
+  member={},
+  empty={Yes; EXPTIME \cite[Thm 4.3.5]{tata}; PTIME for det case \cite[Thm 4.3.6]{tata}},
+  union={Yes, as with AWEDC; \cite[Prop 4.3.2]{tata}},
+  intersect={Yes, as with AWEDC; \cite[Prop 4.3.2]{tata}},
+  compl={Yes, as with AWEDC; \cite[Prop 4.3.2]{tata}},
+  cylind={No; \cite[Sec 4.3.4]{tata}},
+  proj={No; \cite[Sec 4.3.4]{tata}},
+}
