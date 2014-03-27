@@ -45,6 +45,14 @@ are in $\Sigma$ must agree with the first projection of the run itself, and
 all positions of $t$ which are in $\config$ must be so-labeled by the run.
 \Note{That's not very clear, but I think it's right.}
 
+For a run $r$, we define $\tr(r|_p)$ to be the function which returns the
+$\Sigma$ of the original tree at position $p$. (Symbolically, $\tr =
+\pi_1$.)
+Similarly, we define 
+$\lab(r|_p)$ as the (partial) function which returns
+the output configuration at position $p$. ($\lab = \pi_2 \mbox{inr}^{-1}
+\pi_2$.)
+
 \subsection{Nondeterminism}
 
 \subsection{Plies}
@@ -54,6 +62,7 @@ where $\delta$ is restricted to manipulation of trees of the form
 $\mathcal{T}(\Sigma_+ \sqcup \config)$.
 
 \subsection{Local Constraints}
+\label{sec:treeaut:con:loc}
 
 A natural novelty of tree automata is one of {\em constraints} between
 positions in a (sub)tree.  One way of inducing such constraints is to

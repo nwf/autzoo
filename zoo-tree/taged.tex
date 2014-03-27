@@ -1,0 +1,33 @@
+Tree Automata with Global Equality and Disequality (TAGED) were introduced
+by \cite{filiot:sltv} and further results were published in
+\cite{filiot:tagc}.  A TAGED automaton is a regular tree automaton (with
+state set $\sts$) together with two relations:
+\begin{itemize}
+  \item $=_A \subset \sts^2$ reflexive and symmetric,
+  \item $\neq_A \subseteq \sts^2$ irreflexive and symmetric.
+\end{itemize}
+A run $r$ of a TAGED automaton is a run of the underlying regular automaton
+which additionally satisfies, for all positions $p$ and $p'$ in the run,
+\begin{itemize}
+  \item $\lab{r|_p} =_A    \lab{r|_{p'}} \Rightarrow \tr{r|_p} = \tr{r|_{p'}}$,
+  \item $\lab{r|_p} \neq_A \lab{r|_{p'}} \Rightarrow \tr{r|_p} \neq \tr{r|_{p'}}$.
+\end{itemize}
+
+\paragraph{Sub-classes} Polarized forms (``positive'' and ``negative'') are
+also defined as TAGED automata without disequalities (resp. equalities).  A
+``vertically bounded'' TAGED is an automaton in which there is a static
+bound on the number of globally-disequal states on each root-to-leaf path. 
+
+Unless otherwise indicated, references in this table are to
+\cite{filiot:tagc}.
+\autinfo{
+  member={NP-complete; Prop 1},
+  empty={Positive: EXPTIME-complete (Thm 1),
+         Negative: NEXPTIME-complete (Thm 2),
+         Vert. Bound: 2NEXPTIME (Thm 4)},
+  univ={No; Prop 5},
+  union={Yes, polarization-preserving; Prop 2},
+  intersect={Yes, polarization-preserving; Prop 2},
+  compl={No; Prop 4},
+  determinize={No; Prop 3},
+}
