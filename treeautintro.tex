@@ -45,13 +45,11 @@ are in $\Sigma$ must agree with the first projection of the run itself, and
 all positions of $t$ which are in $\config$ must be so-labeled by the run.
 \Note{That's not very clear, but I think it's right.}
 
-For a run $r$, we define $\tr(r|_p)$ to be the function which returns the
-$\Sigma$ of the original tree at position $p$. (Symbolically, $\tr =
-\pi_1$.)
+For a run $r$, we define $\tr{r|_p}$ to be the function which returns the
+$\Sigma$ of the original tree at position $p$.
 Similarly, we define 
-$\lab(r|_p)$ as the (partial) function which returns
-the output configuration at position $p$. ($\lab = \pi_2 \mbox{inr}^{-1}
-\pi_2$.)
+$\lab{r|_p}$ as the (partial) function which returns
+the output configuration at position $p$.
 
 \subsection{Nondeterminism}
 
@@ -80,10 +78,10 @@ We view a locally constrained automaton as a transition function which
 performs a series of tests as part of its transition function {\em after
 pattern matching}, meaning that it may be expressed as a (possibly infinite)
 union of transitions of the form $\mathcal{T}(\Sigma \sqcup \config)
-\stackrel{c}{\longrightarrow} \config$, where $c$ is a set of constraints.
-The \defn{constraint path} is the concatenation of the paths between the
-{\em labeled node whose labeling introduced the constraint} and the
-constrained positions.
+\stackrel{c}{\longrightarrow} \config$, where $c$ is a set of constraints
+between positions below the node under study.  These positions are indicated
+by paths, and we often use the term \defn{constraint path} to refer to paths
+used specifically in this context.
 
 \subsubsection{Metaconstraints}
 
@@ -118,7 +116,17 @@ position $i$.%
 \footnote{See \cite[Exercise 4.8]{tata} for an alternate formalization.}
 
 \paragraph{Opaque} If a position is constrained by a transition, no other
-constraint path may cross this position. 
+constraint path may cross this position.
+
+%
+%\Note{A state controls an address $i$ if
+%\begin{itemize}
+%  \item $i = \epsilon$ and $q$ is opaque, or
+%  \item $i = j\omega$, $q$ is transparent, and...
+%\end{itemize}
+%If a rule $q_1\ldots q_k \to q$ imposes an equality constraint
+%on address $i\omega$, $q_i$ must control $\omega$.
+%}
 
 \paragraph{Reduction} There exists a partial order on $\config$ such that
 $\forall_{t \in \mathcal{T}(\Sigma \sqcup \config), c \in \config}$, $t$ and
@@ -142,10 +150,13 @@ function or otherwise clear from context, we may simply say ``Same-Stated''.
 
 Single-ply automata necessarily satisfy Stated, as every node in a run is
 labeled.  Single-ply automata subject to Contained necessarily satisfy
-Opaque; this is not true of multi-ply automata, as there may be crossing
-constraints within a single multi-ply transition.
+Brother and Opaque; this is not true of multi-ply automata, as there may be
+a path that traverses another node tested for equality within a single
+multi-ply transition.
 
-In general, Contained and Stated together imply Opaque.
+Contained and Stated together imply Opaque.  Non-Overlapping also implies
+Opaque (but the reverse is not true: see
+\autoref{sec:tree-sepex:necessaryoverlap}).
 
 In a deterministic automaton, satisfiable equality constraints referencing
 labeled nodes are necessarily $f$-Same-Stated (for all $f$) as equal trees
