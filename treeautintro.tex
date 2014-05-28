@@ -92,13 +92,23 @@ decision procedures (see \autoref{sec:zoo-tree/awedc}).  A variety of
 restrictions have been developed throughout the literature and are
 summarized here.
 
+\paragraph{Available} All positions tested for equality must certainly exist
+given only the transition.  That is, the LHS of a constraining transition
+must imply that all constraint paths remain within any accepted tree.%
+%
+\footnote{The usual interpretation of an automata familiy without this
+metaconstraint is that the constraint fails if any constraint path exits the
+tree being matched, or that generation backtracks if a child picks an
+expansion that invalidates the path.  One could also imagine systems in
+which the constraint is ignored, which may enable the rule to fire.}
+
 \paragraph{Brothers} The transition function may only mutually constrain
 positions which differ only in the last index.
 
-\paragraph{Contained} All positions tested for equality must be within the
-fragment of the tree being labeled (or generated); that is, constraint paths
-may not involve a $\config$-labeled run node other than at their apex and
-endpoints.
+\paragraph{Contained} A stronger version of Available: all positions tested
+for equality must be within the fragment of the tree being labeled (or
+generated); that is, constraint paths may not involve a $\config$-labeled
+run node other than at their apex and, optionally, endpoint.
 
 \paragraph{Non-Overlapping} No constraint paths may share an edge; that is,
 if it is possible for a constraint path to traverse $q \in \config$ to reach
