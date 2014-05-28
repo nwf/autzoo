@@ -100,6 +100,13 @@ fragment of the tree being labeled (or generated); that is, constraint paths
 may not involve a $\config$-labeled run node other than at their apex and
 endpoints.
 
+\paragraph{Non-Overlapping} No constraint paths may share an edge; that is,
+if it is possible for a constraint path to traverse $q \in \config$ to reach
+its $i$\textsuperscript{th} child, then no transition into $q$ may constrain
+position $i$.%
+%
+\footnote{See \cite[Exercise 4.8]{tata} for an alternate formalization.}
+
 \paragraph{Opaque} If a position is constrained by a transition, no other
 constraint path may cross this position. 
 

@@ -50,3 +50,18 @@ able to unfold the description of that state.  In general, that unfolding
 process might not terminate.
 %
 \Note{I would feel a lot better if somebody checked this.}
+
+\subsection{Necessarily Overlapping}
+
+\begin{wrapfigure}{r}{1in}\centering\begin{tikzpicture}
+  \Tree [.f$_{1=22}$ X [.g$_{1=2}$ X X ] ]
+\end{tikzpicture}\end{wrapfigure}
+The tree in the figure to the right is a small example of a structure which
+necessarily involves overlapping constraints, assuming that the nodes
+$X$ are drawn from an infinite set of trees; if there are merely finitely
+many possibilities, then the constraints may be pushed into the state
+label.  Specifically, because we must constrain positions $1$, $21$ and $22$
+to be equal, we are obligated to have at least one of $21$ and $22$ as
+constraint paths in the automata, and then either the other, which overlaps,
+or the constraint $1=2$ at position $2$, which again overlaps.  However,
+this structure is amenable to Opaque description, as shown.
