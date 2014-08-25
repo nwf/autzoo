@@ -68,6 +68,7 @@ or the constraint $1=2$ at position $2$, which again overlaps.  However,
 this structure is amenable to Opaque description, as shown.
 
 \subsection{Two-counter decomposition}
+\label{sec:tree-sepex:twocm}
 
 Many classes admit machines which, when intersected, yield the two-counter
 example of \cite{tata}.%
@@ -78,43 +79,51 @@ the right spine is the whole computation history and each entry thereon
 carries two complete copies, offset by one move, of its computational path
 prefix, or provenance.}}
 %
-For concreteness, we give a set of five such machines.  In all cases, $q_f$
-is the accepting state.  These machines encode overlapping supersets of the
-set of trees encoding valid two-counter machine execution traces; their
-intersection is exactly this language.  \begin{itemize}
+For concreteness, we give exemplars of such machines in
+\autoref{fig:tree-sepex:2cm-inter}.  In all cases, $q_f$ is the accepting
+state.  These machines encode overlapping supersets of the set of trees
+encoding valid two-counter machine execution traces; their intersection is
+exactly this language.
+%
+\begin{itemize}
 %
   \item The ``end-state'' machine specifies only the left subtree of the
-  root $h$ node: it requires that the encoding's state label be that of the
-  accepting state of the underlying 2CM.
+root $h$ node: it requires that the encoding's state label be that of the
+accepting state of the underlying 2CM.
 %
   \item The ``structural equality and initial-state'' machine specifies more
-  structure: it demands that the tree be a right-branching non-empty list,
-  using $h/2$ as cons and $\#$ as nil, whose ultimate member must encode the
-  initial state of the underlying 2CM with zeroed counters.  Each other
-  element of this list must be a structure unifying $g(P,h(g(P',X),X))$
-  where $P$ and $P'$ are possible 2CM encodings.
+structure: it demands that the tree be a right-branching non-empty list,
+using $h/2$ as cons and $\#$ as nil, whose ultimate member must encode the
+initial state of the underlying 2CM with zeroed counters.  Each other
+element of this list must be a structure unifying $g(P,h(g(P',X),X))$ where
+$P$ and $P'$ are possible 2CM encodings.
 %
   \item The ``top-level constraint'' machine encodes all trees which unify
-  with $h(g(X,Y),Y)$.
+with $h(g(X,Y),Y)$.
 %
-\end{itemize} Not shown here are two more machines along the same lines as
-the ``structural equality and initial-state'' machine, but which impose
-different equality constraints and mandate relations between the
-configurations of the underlying 2CM, corresponding to the rules of said
-2CM.
+\end{itemize}
+%
+Not shown here is another machine along the same lines as the ``structural
+equality and initial-state'' machine, which constructs a right-branching
+$h$-list, again terminated by $h(g(p_{init}(z,z),\#),\#)$, of valid
+transitions of the 2CM by relating $\expect{p'_i,N_{il}',N_{ir}'}$ and
+$\expect{p_i,N_{il},N_{ir}}$ for each position $i$ of the list, again using
+equality constraints on the ``q'' node at the root of each list element.
+The $X_i$ nodes continue to be parsed as $q_\forall$ (and need not be
+mutually equated) and there are no constraints between elements of the list.
 
 Note that each of these machines, taken in isolation, satisfies a slew of
 local metaconstraints: Reducing (each machine has at most two ranks), Stated
-(because they are all single-ply), $rank$-same-stated, $id$-same-stated
-\Note{Please check two not pictured}, Opaque, and Non-overlapping.  Further,
-all these machines are equivalent to multi-ply machines additionally
-satisfying Contained. \Note{I believe this is right for the two not
-pictured, as well.}  Due to the presence of $q_\forall$, none of them are
-deterministic machines.  We may therefore conclude that (at least) any class
-of nondeterministic machines which is subject to any subset of these
-metaconstraints and does not impose additional restrictions {\em has at most
-one of decidable emptiness testing and closure under intersection}.
+(because they are all single-ply), Same-Stated, Opaque, and Non-overlapping.
+Further, all these machines are equivalent to multi-ply machines
+additionally satisfying Contained.  Due to the presence of $q_\forall$, none
+of them are deterministic machines.  We may therefore conclude that (at
+least) any class of nondeterministic machines which is subject to any subset
+of these metaconstraints and does not impose additional restrictions {\em
+has at most one of decidable emptiness testing and closure under
+intersection}.
 
+\begin{figure}
 \begin{lrbox}{\tempboxa}
 \begin{minipage}{4cm}
 \begin{align*}
@@ -129,7 +138,7 @@ one of decidable emptiness testing and closure under intersection}.
 \begin{lrbox}{\tempboxb}
 \begin{minipage}{3cm}
 \begin{align*}
-  h(q_g, q_\forall) &\xrightarrow{12=2} q_f \\
+  h(q_g, q_\forall) &\rightarrow{12=2} q_f \\
   g(q_\forall, q_\forall) &\rightarrow q_g
 \end{align*}
 \end{minipage}
@@ -137,7 +146,7 @@ one of decidable emptiness testing and closure under intersection}.
 \begin{lrbox}{\tempboxc}
 \begin{minipage}{3cm}
 \begin{align*}
-  g(q_p, q_h) &\xrightarrow{22=212} q_g \\
+  g(q_p, q_h) &\xrightarrow{22=212} q_T \\
   h(q_g', q_\forall) &\rightarrow q_h \\ 
   g(q_p, q_\forall) &\rightarrow q_g' \\
   \forall i . p_i(q_{\mathbb{N}}, q_{\mathbb{N}}) &\rightarrow g_p \\
@@ -157,7 +166,6 @@ one of decidable emptiness testing and closure under intersection}.
 \end{align*}
 \end{minipage}
 \end{lrbox}
-
 \begin{tabular}{|c|c|c|}
 \hline
 {End state $p_{accept}$} &
@@ -167,9 +175,9 @@ one of decidable emptiness testing and closure under intersection}.
 \hline
 \Tree [.h [.g [. p$_{accept}$ N$_l$ N$_r$ ] Y ] Z ]
 &
-\Tree [.h$_{12=2}$ [.g X Y ] X ]
+\Tree [.h$_{12=2}$ [.g X Y ] Y ]
 &
-\Tree [.h [.g$_{22=212}$ [.p$_j$ $N'_l$ $N'_r$ ] [.h [.g [.p$_{1i}$ $N_{1l}$ $N_{1r}$ ] X$_1$ ] $Y_1$ ] ] [.$\cdots$ $\cdots$ [.h [.g [.p$_{init}$ z z ] [.\# ] ] [.\# ] ] ] ]
+\Tree [.h [.g$_{22=212}$ [.$p'_1$ $N'_{1l}$ $N'_{1r}$ ] [.h [.g [.$p_1$ $N_{1l}$ $N_{1r}$ ] X$_1$ ] X$_1$ ] ] [.$\cdots$ $\cdots$ [.h [.g [.p$_{init}$ z z ] [.\# ] ] [.\# ] ] ] ]
 \\
 \hline
 
@@ -185,3 +193,6 @@ one of decidable emptiness testing and closure under intersection}.
 \\
 \hline
 \end{tabular}
+\caption{Schematics and machines for 2CM-by-intersection construction.}
+\label{fig:tree-sepex:2cm-inter}
+\end{figure}
