@@ -1,5 +1,62 @@
 \Note{Various classes are introduced by \cite{godoy:hom}.
-$TA_{\text{hom},\neq}$ is multi-ply AWEDC subject to Contained and Same-Stated
-(and, by implication, Opaque) only for equality constraints; disequality
-constraints are without metaconstraints.
 }
+
+Introduced by \cite[Definition 4.1]{godoy:hom}, $TA_{\text{hom}}$ is the
+class of positive, multi-ply AWEDCs (\autoref{sec:zoo-tree/awedc}) whose
+equality constraints are subject to Contained and Same-Stated (and, by
+implication, Opaque).
+
+Notably, $TA_{\text{hom}}$ is sufficient to capture the family of languages
+which are tree-homomorphic images of positive AWEDCs (\ie $TA_{=}$).
+\cite[Proposition 4.6]{godoy:hom}.
+
+Also introduced by \cite[Definition 4.1]{godoy:hom}, $TA_{\neq,\text{hom}}$
+is similar to $TA_{\text{hom}}$ with the addition of arbitrary disequality
+constraints.
+
+For $TA_{\neq,\text{hom}}$, we have:
+\autinfo{
+  empty={Yes; pumping construction \cite[Corollary 5.11]{godoy:hom}.},
+  intersect={No; see below.},
+}
+
+\subsection{Intersection Non-closure of $TA_{\text{hom}}$}
+
+\begin{wrapfigure}{l}{3.75in}\centering\begin{tabular}{cc}
+	{$\!\begin{aligned}
+	\text{nil} &\xrightarrow{\phantom{1=21}} q_f \\
+    \text{cons}(q_e, \text{cons}(q_e,q_l)) &\xrightarrow{1=21} q_f \\
+    \text{a} &\xrightarrow{\phantom{1=21}} q_e \\
+    \text{f}(q_e,q_e) &\xrightarrow{\phantom{1=21}} q_e \\
+    \end{aligned}$}
+&
+	{$\!\begin{aligned}
+    \text{cons}(q_e, \text{nil}) &\xrightarrow{\phantom{1=21}} q_l \\
+    \text{cons}(q_e, \text{cons}(q_e,q_l)) &\xrightarrow{1=21} q_l \\
+    \text{cons}(q_e, q_l) &\xrightarrow{\phantom{1=21}} q_f \\
+    \text{a} &\xrightarrow{\phantom{1=21}} q_e \\
+    \text{f}(q_e,q_e) &\xrightarrow{\phantom{1=21}} q_e \\
+    \end{aligned}$}
+\end{tabular}
+\caption{$TA_{\text{hom}}$ to exhibit failure of intersection
+closure.}
+\label{fig:zoo-tree/tahom:icf}
+\end{wrapfigure}
+
+The proof sketch here relies on the all-equal separating example of
+\autoref{sec:tree-sepex:allequallist}.  We can exhibit $TA_{\text{hom}}$
+automata for the set of lists of even length whose elements are from the
+infinite set $\mathcal{T}\set{f/2, a/0}$, and whose consecutive elements are
+equal (\eg $[A,A,B,B,\ldots,Y,Y,Z,Z]$), as on the left of
+\autoref{fig:zoo-tree/tahom:icf}, and for the related set of lists which
+have ``one more'' element on the beginning and end (\eg
+$[A,B,B,C,C,\ldots,Y,Y,Z]$), as on the right.  In both cases, $q_f$ is the
+sole accepting state of the machine.  Note that the former machine is {\em
+deterministic} while the latter is top-down deterministic but only bottom-up
+deterministic given one symbol of lookahead.  Their intersection would be
+the set of non-empty, even-length, all-equal lists $[A,A,A,\ldots,A]$, which
+would require an infinite collection of $TA_{\text{hom}}$ transitions, one
+for each length.
+
+\Note{This leaves open the question of the intersection closure of
+bidirectionally determinstic $TA_{\text{hom}}$.}

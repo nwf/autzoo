@@ -6,6 +6,10 @@ state set $\sts$) together with two relations:
   \item $=_A \subset \sts^2$ reflexive and symmetric,
   \item $\neq_A \subseteq \sts^2$ irreflexive and symmetric.
 \end{itemize}
+%
+(Note that these relations need not be total: there may exist two states $p$
+and $q$ for which neither $p =_A q$ nor $p \neq_A q$ holds.)
+%
 A run $r$ of a TAGED automaton is a run of the underlying regular automaton
 which additionally satisfies, for all positions $p$ and $p'$ in the run,
 \begin{itemize}
@@ -13,10 +17,16 @@ which additionally satisfies, for all positions $p$ and $p'$ in the run,
   \item $\lab{r|_p} \neq_A \lab{r|_{p'}} \Rightarrow \tr{r|_p} \neq \tr{r|_{p'}}$.
 \end{itemize}
 
-\paragraph{Sub-classes} Polarized forms (``positive'' and ``negative'') are
-also defined as TAGED automata without disequalities (resp. equalities).  A
-``vertically bounded'' TAGED is an automaton in which there is a static
-bound on the number of globally-disequal states on each root-to-leaf path. 
+\paragraph{Sub-classes}
+\begin{itemize}
+%
+  \item Polarized forms are defined and denoted $TAGED+$ (for which $\neq_A = \emptyset$) and $TAGED-$ ($=_A = \emptyset$).
+%
+  \item A ``vertically bounded'' TAGED is an automaton in which
+there is a static bound on the number of globally-disequal states on each
+root-to-leaf path. 
+%
+\end{itemize}
 
 Unless otherwise indicated, references in this table are to
 \cite{filiot:tagc}.
@@ -30,4 +40,51 @@ Unless otherwise indicated, references in this table are to
   intersect={Yes, polarization-preserving; Prop 2},
   compl={No; Prop 4},
   determinize={No; Prop 3},
+}
+
+\subsection{Rigid Tree Automata}
+\label{sec:zoo-tree/rta}
+
+Rigid Tree Automata (RTA) are introduced by \cite{jacquemard:rta}.  Like
+TAGED, a RTA is defined by a regular tree automaton (with state set $\sts$)
+and a distinguished set of configurations, $R \subseteq \sts$, and
+imposes the global constraint (Def. 2) that $\forall_{p_1,p_2} . \brak{
+r(p_1) = r(p_2) \in R } \Rightarrow t\vert_{p_1} = t\vert_{p_2}$.
+
+\subsubsection{Relation to other classes}
+
+RTAs are \dots
+%
+\begin{itemize}
+%
+  \item easily seen to be a sub-class of TAGED+ (\cite[Sec.
+3.1]{jacquemard:rta}), with the injection trivial.
+%
+  \item a super-class of TAGED+, at possible exponential space complexity;
+see \cite[Prop. 2]{jacquemard:rta} and \cite{filiot:tagc}).
+%
+\end{itemize}
+
+\Note{Other classes also discussed in Sec. 3: TAC, DAG automata, TA1M,
+ACRV.}
+
+Deterministic RTA are a strict sub-class of RTA (Thm. 4) but strictly
+include TA without constraints (Thm. 5).
+
+Unless otherwise indicated, references in this table are to
+\cite{jacquemard:rta}.
+\autinfo{
+  empty={Linear time; Sec. 6.1},
+  member={NP-complete; Sec. 6.2},
+  univ={No, reduction of PCP; Sec. 6.4},
+  finite={PTIME; Sec. 6.6},
+%
+  compl={No; Sec. 4.2},
+  determinize={No; Sec. 5.1},
+%
+  equiv={No, by implication of universality; Sec. 6.5},
+  subset={No, by implication of universality; Sec 6.5},
+%
+  union={Linear time and space; Sec. 4.1},
+  intersect={Exponential time and space; Sec. 4.1},
 }

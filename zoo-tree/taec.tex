@@ -1,0 +1,66 @@
+Tree Automata with Equational Constraints are introduced in
+\cite{jacquemard:tamodeq}.  The key innovations over Reduction Automata
+(\autoref{sec:zoo-tree/ra}) are
+%
+\begin{itemize}
+%
+  \item A generalization of equality constraints to ``equational
+        constraints''
+  \item A strengthening of the Reduction metaconstraint.
+%
+\end{itemize}
+
+TAECs permit two form of clauses (names and syntax from
+\cite{jacquemard:tamodeq}).
+%
+\begin{itemize}
+%
+  \item[(t)] Written ``$Q_1(x_1),\ldots,Q_n(x_n) \Rightarrow
+  Q(f(x_1,\ldots,x_n))$, this form is a typical transition as might be found
+  in a TA: $Q$ and the $Q_i$ are configurations of the machine, $x_i$ are
+  subtrees.  We might also express this rule as $f(Q_1,\ldots,Q_n) \to Q$ in
+  the notation of other works.
+%
+  \item[(d)] Written $Q_1(x_1),\ldots,Q_n(x_n),u_1 = v_1,\ldots,u_k = v_k
+  \Rightarrow Q(x)$, the novel $u_i$ and $v_i$ are trees over the alphabet
+  of the automaton {\em and} $x$ and the $x_i$s (interpreted as nullary
+  symbols).  This transition fires only when the equations hold.  Note that
+  the target of the rule is not required to have the $x_i$s as subtrees!
+%
+\end{itemize}
+
+The configuration space is partitioned into (partially ordered) ranks;
+configurations in any rank other than the (unique) lowest are called ``test
+predicates''.  These ranks are used in metaconstraints imposed on clauses.
+(Note the similarity to Reduction.)
+%
+\begin{itemize}
+%
+  \item[(t)] Either
+    %
+    \begin{itemize}
+      %
+      \item $Q$ and all $Q_i$ are at the lowest rank (\ie are not test
+      predicates)
+      %
+      \item $Q$ is a test predicate (not at the lowest rank)
+      and {\em at most one} $Q_i$ is equal to
+      $Q$ and all others are {\em not} test predicates.
+      % 
+    \end{itemize}
+  %
+  \item[(d)] $Q$ is a test predicate and all $Q_i$ are either not test
+  predicates or test predicates of lower rank than $Q$.
+%
+\end{itemize}
+
+These constraints permit constructions like the all equal list and markovian
+equal lists but do not permit the rules that would be necessary for
+equal-leaved full N-ary trees, as the recursive rule produces a test
+predicate (because it compares its children) but recurses to $N \ge 2$
+occurrences of that same state.
+
+\paragraph{Equational Constraints}  Whereas equality constraints require
+that the subtrees at two positions are equal in order for the rule to fire,
+equational constraints gate the rule by a series of equalities between trees
+which contain variables.

@@ -1,6 +1,6 @@
 Just as string automata describe sets of strings over some alphabet of
 characters, tree automata describe sets of trees whose nodes are labeled
-with elements of some set $\Sigma$.  We focus initially on {\em ranked} tree
+with elements of some set $\alphabet$.  We focus initially on {\em ranked} tree
 automata.
 
 \subsection{Notation for Trees}
@@ -8,14 +8,14 @@ automata.
 \Note{Positions}
 \Note{subterm-at-position}
 
-$\Sigma_n \defeq \set{ \sigma \in \Sigma \middle\vert \mbox{ar}(\sigma) = n}$
-and $\Sigma_+ \defeq \Sigma\setminus\Sigma_0$.
+$\alphabet_n \defeq \set{ \sigma \in \alphabet \middle\vert \mbox{ar}(\sigma) = n}$
+and $\alphabet_+ \defeq \alphabet\setminus\alphabet_0$.
 
 \subsection{Execution of Automata}
 
 As with the string case, there will be configurations $\config$, and a
-privileged subset $\config_F$.  However, transition functions are
-quite different, and in fact split into two sub-classes of tree automata:%
+privileged subset $\config_F$.  However, transition functions are quite
+different, and in fact split into two sub-classes of tree automata:%
 %
 \footnote{The transition functions presented here are for {\em
 deterministic} automata.  See \autoref{xxx} for details of non-deterministic
@@ -23,41 +23,67 @@ automata.}
 %
 \begin{itemize}
 %
-  \item $\delta^{op} : \config \to \mathcal{T}(\Sigma \sqcup \config)$ defines a
-  \defn{top-down} automaton, which can be thought of generating a tree
-  root-first; the positions in the output which are configurations are
-  recursively expanded into trees.
+  \item $\delta^{op} : \Pi_{t \in \mathcal{T}(\alphabet \sqcup \set{\star})}
+. \config \times t \to (1 + (P_{t,\star} \to \config))$, where $P_{t,\star} =
+\set{ \pi \mid t\downharpoonleft_\pi = \star}$, defines a \defn{top-down}
+automaton, which matches a tree root-first.  It is given a configuration
+$\config$ and a tree with some leaves being the symbol $\star$ and either
+fails or returns a map from paths to $\star$ nodes to configurations.
 %
-  \item $\delta : \mathcal{T}(\Sigma \sqcup \config) \to (1 + \config)$ defines a
-  \defn{bottom-up} automaton, which can be thought of as consuming a tree
-  leaves-first.  Note that we allow, in general, the automata to refuse to
-  label a node (the $1$ return value), but certain classes of automata will
-  not avail themselves of this option.
+  \item $\delta : \mathcal{T}(\alphabet \sqcup \config) \to (1 + \config)$
+defines a \defn{bottom-up} automaton, which can be thought of as consuming a
+tree leaves-first; the transition function will be presented with a subtree
+with some subtrees replaced by configurations $\config$.  The automaton
+considers smaller such subtrees first.  Note that we allow, in general, the
+automata to refuse to label a node (the $1$ return value), but certain
+classes of automata will not avail themselves of this option.
 %
 \end{itemize}
 
-A \defn{run} of a tree automaton to be a tree in $\mathcal{T}\paren{\Sigma
-\times (1 + \mathcal{T}(\Sigma \sqcup \config) \times \config)}$: an
+A \defn{run} of a tree automaton to be a tree in $\mathcal{T}\paren{\alphabet
+\times (1 + \mathcal{T}(\alphabet \sqcup \config) \times \config)}$: an
 augmented tree where each node is additionally, optionally, labeled by input
 and output of $\delta$.  For each node $\sigma \times \mbox{inr}(t \times
 c)$, $\delta t = c$ (or $\delta^{op} c = t$), and all positions of $t$ which
-are in $\Sigma$ must agree with the first projection of the run itself, and
+are in $\alphabet$ must agree with the first projection of the run itself, and
 all positions of $t$ which are in $\config$ must be so-labeled by the run.
 \Note{That's not very clear, but I think it's right.}
 
 For a run $r$, we define $\tr{r|_p}$ to be the function which returns the
-$\Sigma$ of the original tree at position $p$.
-Similarly, we define 
-$\lab{r|_p}$ as the (partial) function which returns
-the output configuration at position $p$.
+$\alphabet$ of the original tree at position $p$.  Similarly, we define
+$\lab{r|_p}$ as the (partial) function which returns the output
+configuration at position $p$.
 
 \subsection{Nondeterminism}
 
+\Note{...}
+
+Generalizing the {\em deterministic} transition functions above, we can
+define
+%
+\begin{itemize}
+%
+  \item 
+%
+  \item $\delta : \mathcal{T}(\alphabet \sqcup \config) \to \mathcal{P}\config$
+defines a \defn{non-deterministic bottom-up} automaton.  If a subtree is
+labeled by $C \subseteq \config$, then the execution will consider each $c
+\in C$ when applying $\delta$ at higher positions in the tree.
+%
+\end{itemize}
+
 \subsection{Plies}
 
-An important subclass of tree automata are the \defn{single-ply} automata,
-where $\delta$ is restricted to manipulation of trees of the form
-$\mathcal{T}(\Sigma_+ \sqcup \config)$.
+An important subclass of tree automata are the \defn{single-ply} automata.
+Here, $\delta$ is restricted to manipulation of trees of the form
+$\bigcup_{n} \alphabet_n \config^n$.  Dually, $\delta^{op}$ will be called
+only on $t \in \Pi_{n \in \mathbb{N}} . \alphabet_n \star^n$ and will be
+obligated to return successfully.  Note that, in this case, $(P_{t,\star}
+\to \config) \simeq (\set{1,\ldots,n} \to \config) \simeq \config^n$, so the
+single-ply $\delta^{op}$ has type $\Pi_{n \in \mathbb{N}} . \config \times
+\alphabet_n \star^n \to \config^n$, which is (more) readily seen to be the
+type of functions which are given a configuration and a symbol (of arity
+$n$) and return $n$ configurations.
 
 % \subsection{New Operations: Cylindrification and Projection}
 % 
@@ -70,14 +96,14 @@ $\mathcal{T}(\Sigma_+ \sqcup \config)$.
 A natural novelty of tree automata is one of {\em constraints} between
 positions in a (sub)tree.  One way of inducing such constraints is to
 augment the transition function, inducing {\em local} tests in the tree; one
-can think of this as including $\mathcal{T}(\Sigma)$ as a projection of
+can think of this as including $\mathcal{T}(\alphabet)$ as a projection of
 $\config$, though with restricted handling within the transition
 function,\eg only comparison for (dis)equality.
 
 We view a locally constrained automaton as a transition function which
 performs a series of tests as part of its transition function {\em after
 pattern matching}, meaning that it may be expressed as a (possibly infinite)
-union of transitions of the form $\mathcal{T}(\Sigma \sqcup \config)
+union of transitions of the form $\mathcal{T}(\alphabet \sqcup \config)
 \stackrel{c}{\longrightarrow} \config$, where $c$ is a set of constraints
 between positions below the node under study.  These positions are indicated
 by paths, and we often use the term \defn{constraint path} to refer to paths
@@ -129,7 +155,7 @@ constraint path may cross this position.
 %}
 
 \paragraph{Reduction} There exists a partial order on $\config$ such that
-$\forall_{t \in \mathcal{T}(\Sigma \sqcup \config), c \in \config}$, $t$ and
+$\forall_{t \in \mathcal{T}(\alphabet \sqcup \config), c \in \config}$, $t$ and
 $c$ being related by transition implies that $\forall_{c' \in t} . c' \le
 c$, strictly if the transition between $t$ and $c$ induces any constraints.
 
@@ -141,10 +167,11 @@ $\config$.
 
 \subparagraph{$f$-Same-Stated} All positions mutually constrained must be
 labeled (as above) and further the $f$-image of these configurations must be
-identical.  (That is, the pattern of $\mathcal{T}(\Sigma \sqcup \config)$
+identical.  (That is, the pattern of $\mathcal{T}(\alphabet \sqcup \config)$
 matched by a transition must be sufficient to ensure that all constraint
-paths end in equal-$f$-image nodes of the run.)  When $f$ is the identity
-function or otherwise clear from context, we may simply say ``Same-Stated''.
+paths end in equal-$f$-image nodes of the run.) When $f$ is the identity
+function or otherwise clear from context, we may simply say
+``Same-Stated''.
 
 \subsubsection{Interrelation of Metaconstraints}
 
@@ -158,9 +185,21 @@ Contained and Stated together imply Opaque.  Non-Overlapping also implies
 Opaque (but the reverse is not true: see
 \autoref{sec:tree-sepex:necessaryoverlap}).
 
-In a deterministic automaton, satisfiable equality constraints referencing
-labeled nodes are necessarily $f$-Same-Stated (for all $f$) as equal trees
-produce equal runs.
+\subsubsection{Same-Stated vs. Determinism}
+
+In general, equality constraints with paths terminating in different states
+is implicitly asking for a tree which is in the {\em intersection} of the
+languages of trees accepted by that state in addition to any other
+constraints imposed by other constraints above the two constraint paths'
+termini.  Same-Stated does not eliminate these additional constraints, but
+prevents the automata from performing these particular intersection tests at
+runtime.
+
+In a fully deterministic automaton, then, all satisfiable equality
+constraints referencing at least one labeled node are necessarily
+Same-Stated as equal trees produce equal runs; any constraint which referred
+to nodes in different states would, therefore, be restricting to the
+intersection of two disjoint sets of trees, \ie the empty set.
 
 \subsection{Transducers}
 

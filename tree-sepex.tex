@@ -5,12 +5,14 @@ such examples here.
 \subsection{Equalities Vs. Recursion}
 
 \subsubsection{All-equal lists}
+\label{sec:tree-sepex:allequallist}
 
 Not all classes of automata permit free interaction of recursion and
 equality constraints; as such, these classes may not be able to describe the
 language of all-equal lists: $\set{ [], [A], [A,A], [A,A,A], \ldots }$ for
 any $A$.  Note, however, that for a fixed, regular tree $A$, the set of
-all-equal lists of $A$ is a regular tree language.  The difficulty emerges
+all-equal lists of $A$ is a regular tree language, and therefore the set of
+all-equal lists from a finite vocabulary is expressible .  The difficulty emerges
 when we wish to describe all-equal lists over an unbounded number of
 possible elements.
 
@@ -18,32 +20,47 @@ possible elements.
 
 A generalization of the above, consider the language of lists composed of
 regions of size at least two whose elements are equal, for example:
-$[A,A,B,B,B]$ or $[A,A,A,B,B,C,C,D,D,D,D]$.  Rigid tree automata will not be
-able to describe such a class due to the need for unboundedly many
-equivalence classes.
+$[A,A,B,B,B]$ or $[A,A,A,B,B,C,C,D,D,D,D]$.  TAGED and its subclasses
+(\autoref{sec:zoo-tree/taged}) will not be able to describe such a language
+due to the need for unboundedly many equivalence classes.
 
-\subsection{Opacity}
+\subsubsection{Equal-Leaved Full N-Ary Trees}
+
+Suppose we have an {\em infinite} tree language $\mathcal{L}$.  There is a
+language $\mathcal{L}'$ which consists of (\texttt{f}-labeled) full binary
+trees whose leaves are from $\mathcal{L}$; it is the smallest fixed point of
+the equation $\mathcal{L}' = \mathcal{L} \cup \set{ \mathtt{f}(l,\ldots,l)
+\middle\vert l \in \mathcal{L}'}$.  This language is {\em not} regular; it
+is recognizable by many, but not all, classes of automata with local
+equality constraints.  Such examples are bread-and-butter for the families
+with global constraints.
+
+It is important for this example that $\mathcal{L}$ be infinite: if it were
+finite, then we could encode the leaf subtree into the state label of an
+ordinary TA and equality constraints would not enter into consideration.
+
+\subsection{Opacity vs. Intersection}
 
 Consider the sets of trees described by
 %
 \begin{center}\begin{tabular}{cc}
-    $\set{ f(g(X,Y),g(Z,X)) \middle\vert X,Y,Z \in \mathcal{T}(\Sigma)}$
-  & $\set{ f(W,g(A,B)) \middle\vert A,B,W \in \mathcal{T}(\Sigma) \wedge A\vert_1 = B\vert_2 }$
+    $\set{ f(g(X,Y),g(Z,X)) \middle\vert X,Y,Z \in \mathcal{T}(\alphabet)}$
+  & $\set{ f(W,g(A,B)) \middle\vert A,B,W \in \mathcal{T}(\alphabet) \wedge A\vert_1 = B\vert_2 }$
   \\
     \begin{tikzpicture}
       \Tree [.f [.g X Y ] [.g Z X ] ]
     \end{tikzpicture}
   & \begin{tikzpicture}
-      \Tree [.f W [.g$_{11=21}$ A B ] ]
+      \Tree [.f W [.g$_{11=22}$ A B ] ]
     \end{tikzpicture}
 \end{tabular}\end{center}
 %
 These descriptions are clearly (given their comprehension form) amenable to
 classification by Opaque constraints.  Their intersection is $\set{
-f(g(A,B),g(C,A)) \middle\vert A,B,C \in \mathcal{T}(\Sigma) \wedge C\vert_1
+f(g(A,B),g(C,A)) \middle\vert A,B,C \in \mathcal{T}(\alphabet) \wedge C\vert_1
 = A\vert_2 }$, which can be made amenable to Opaque classification only if
-we are able to unfold $\mathcal{T}(\Sigma)$ for $A$ and $C$.  While we can
-do this for regular trees over finite $\Sigma$, in general what we are
+we are able to unfold $\mathcal{T}(\alphabet)$ for $A$ and $C$.  While we can
+do this for regular trees over finite $\alphabet$, in general what we are
 calling here $A$ will actually be trees accepted by a particular state, so
 we can only describe this intersection with Opaque constraints if we are
 able to unfold the description of that state.  In general, that unfolding
@@ -71,7 +88,7 @@ this structure is amenable to Opaque description, as shown.
 \label{sec:tree-sepex:twocm}
 
 Many classes admit machines which, when intersected, yield the two-counter
-example of \cite{tata}.%
+example of \cite{tata} (also \autoref{sec:zoo-tree/ra:ndempty}).%
 %
 \footnote{\Note{Somewhere, possibly here, more should be said about this
 excellent example.  A concise summary of how it does what it does is that
@@ -138,7 +155,7 @@ intersection}.
 \begin{lrbox}{\tempboxb}
 \begin{minipage}{3cm}
 \begin{align*}
-  h(q_g, q_\forall) &\rightarrow{12=2} q_f \\
+  h(q_g, q_\forall) &\xrightarrow{12=2} q_f \\
   g(q_\forall, q_\forall) &\rightarrow q_g
 \end{align*}
 \end{minipage}
