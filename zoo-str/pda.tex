@@ -7,7 +7,7 @@ empty stack.
 Each transition of the automaton is given the top symbol of the
 stack as well as the FSM's state and input character, and may manipulate the
 stack by optionally popping the top symbol, and optionally pushing a new
-symbol.  That is, $\delta$ may be characterized by the type $\Sigma
+symbol.  That is, $\delta$ may be characterized by the type $\alphabet
 \times \mathcal{Q} \times \paren{1 + \Gamma} \to \mathcal{Q} \times
 \paren{1 + \Gamma} \times 2$, where $1 + \Gamma$ indicates an optional push
 to the stack and $2$ indicates a boolean decision to pop.%
@@ -15,8 +15,8 @@ to the stack and $2$ indicates a boolean decision to pop.%
 \footnote{Attempting to pop an emtpy stack is assumed to leave the stack
 empty.  We might have been more precise by forbidding popping an empty stack
 and instead have said that $\delta$ was fully characterized by the type
-$\paren{\Sigma \times \sts \to \sts \times \paren{1 + \Gamma}} \times
-\paren{\Sigma \times \sts \times \Gamma \to \sts \times \paren{1 + \Gamma}
+$\paren{\alphabet \times \sts \to \sts \times \paren{1 + \Gamma}} \times
+\paren{\alphabet \times \sts \times \Gamma \to \sts \times \paren{1 + \Gamma}
 \times 2}$, but this more-strict view does not seem worth-while.}
 %
 
@@ -58,7 +58,7 @@ or \cite[Ch. 2]{sipser:theorycomp} for thourough introductions.
     empty={Yes \cite{xxx}},
     univ={Undecidable; proof via ``computation history'' of a
           \hyperref[sec:zoo-str/tm]{TM}. \cite{xxx}},
-    equiv={Undecidable; $\Sigma^*$ is recognizable, but universality is
+    equiv={Undecidable; $\alphabet^*$ is recognizable, but universality is
            undecidable.},
     intersect={Undecidable; reduction from Post Correspondance \cite{xxx}},
 }

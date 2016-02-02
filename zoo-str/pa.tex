@@ -2,7 +2,7 @@ An extension of the non-deterministic PDA \autoref{sec:zoo-str/pda}
 introduced by \cite{aho:pa}, pushdown assemblers have a (non-empty) stack
 whose entries are a tuple of a symbol and $k$-many string registers.  A PA
 has four sets of symbols used during its computation: states
-($\mathcal{Q}$), input symbols ($\Sigma$), output symbols ($\Delta$), and
+($\mathcal{Q}$), input symbols ($\alphabet$), output symbols ($\Delta$), and
 stack (``tape'') symbols ($\Gamma$).  Let $Q_0 \in \mathcal{Q}$ and $Z_0 \in
 \Gamma$ be the initial state and stack symbol.
 
@@ -20,14 +20,14 @@ are
 %
 \begin{itemize}
 %
-	\item[$\lambda$] of type $\mathcal{Q} \times \paren{\Sigma + 1} \times
+	\item[$\lambda$] of type $\mathcal{Q} \times \paren{\alphabet + 1} \times
 	\Gamma \to \mathcal{P}\brak{ \mathcal{Q} \times \Gamma^* }$
 %
-	\item[$\mu$] of type $\mathcal{Q} \times \paren{\Sigma + 1} \times
+	\item[$\mu$] of type $\mathcal{Q} \times \paren{\alphabet + 1} \times
 	\Gamma \to \mathcal{P}\brak{ \mathcal{Q} \times \Delta^* \times
 	\set{1,\ldots,k} }$
 %
-	\item[$\nu$] of type $\mathcal{Q} \times \paren{\Sigma + 1} \times
+	\item[$\nu$] of type $\mathcal{Q} \times \paren{\alphabet + 1} \times
 	\Gamma \to \mathcal{P}\brak{ \mathcal{Q} \set{1,\ldots,k} }$
 %
 \end{itemize}
@@ -37,7 +37,7 @@ $c = q \times w \times \paren{Z\brak{x_1,\ldots,x_k}}\alpha$ and $c' \in
 \delta\paren{c \times a}$ (where $q \in \mathcal{Q}$ is the state of the
 machine, $w \in 1 + \Delta^*$, $Z\brak{x_1,\ldots,x_k}$ with $Z \in \Gamma$
 and $x_i \in \Delta^* + 1$ is the head of the stack, $\alpha$ the
-remainder, and $a \in \Sigma + 1$ the next input symbol or the empty string)
+remainder, and $a \in \alphabet + 1$ the next input symbol or the empty string)
 is as follows (see \cite[p.  48]{aho:pa}):
 %
 \begin{align*}

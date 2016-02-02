@@ -1,30 +1,32 @@
 String automata represent a {\em mechanical} description of languages over
-$\Sigma$ (\ie subsets of the strings which may be formed from the
-characters of a particular alphabet, $\Sigma$).  There are numerous
+$\alphabet$ (\ie subsets of the strings which may be formed from the
+characters of a particular alphabet, $\alphabet$).  There are numerous
 equivalent ways of stating this, possibly the most useful being that an
-automaton can be thought of as an {\em indicator function} of type $\Sigma^*
+automaton can be thought of as an {\em indicator function} of type $\alphabet^*
 \to 2$, signaling whether a given string is or is not part of its language.
 
 \subsection{Execution of Automata}
 
 At the core of each automaton will be a \defn{transition function},
 $\delta$, which will take the current configuration of the machine (which we
-shall denote in general with $c \in \config$) and a character of $\Sigma$ to
+shall denote in general with $c \in \config$) and a character of $\alphabet$ to
 produce a new configuration (usually very closely related to the input
-configuration, having been changed through a constrained interface).  Each
-automaton will specify exactly one \defn{initial configuration}, $c_0 \in
-\config$, and will designate some configurations as \defn{accepting
-configurations}, $\config_F \subseteq \config$.
+configuration, having been changed through a constrained interface).  We say
+that $\delta$ has type $\alphabet \times \config \to \config$, sometimes
+written $\delta : \alphabet \times \config \to \config$.  Each automaton will
+specify exactly one \defn{initial configuration}, $c_0 \in \config$, and
+will designate some configurations as \defn{accepting configurations},
+$\config_F \subseteq \config$.
 
-To test whether a particular string $\vec{s} = s_1 \ldots s_n \in \Sigma^*$
+To test whether a particular string $\vec{s} = s_1 \ldots s_n \in \alphabet^*$
 is in its language, one starts with the automaton in its initial
 configuration, feeds its transition function each character of the string in
 turn (\ie $s_1$, then $s_2$, and so on, up to $s_n$), and then looks to see
 if the automaton is now in an accepting configuration.  More formally, we
 can define a \defn{run} of an automaton as a string composed of alternating
-elements of $\config$ and $\Sigma$.  If, after transitioning on $s_i$ the
+elements of $\config$ and $\alphabet$.  If, after transitioning on $s_i$ the
 machine is in configuration $c_i$, then $c_0 s_1 c_1 s_2 c_2 \ldots s_n c_n$
-is the run of the machine on $\vec{s} \in \Sigma^*$.  A run is said to be
+is the run of the machine on $\vec{s} \in \alphabet^*$.  A run is said to be
 accepting if $c_n$ is an accepting configuration (\ie $c_n \in \config_F$).%
 %
 \footnote{It is equally sensible to feed strings through an automaton in
@@ -45,25 +47,37 @@ equivalent, we find it useful to distinguish the inputs and outputs of the
 transition process.}
 %
 Now a run of our nondeterministic machine looks like $C_0 s_1 C_1 \ldots s_n
-C_n$ where each $C_i \subseteq \config$ and $c' \in C_{i+1}$ iff
-$\exists_{c \in C_i} . c' \in \delta\paren{c,s_{i+1}}$.  We consider the
-string $\vec{s}$ accepted by the automaton if {\em there exists} a run, as
-defined earlier, where each $c_i \in C_i$, and $c_n \in \config_F$.
+C_n$ where each $C_i \subseteq \config$ and $c' \in C_{i+1}$ iff $\exists_{c
+\in C_i} . c' \in \delta\paren{c,s_{i+1}}$.  We consider the string
+$\vec{s}$ accepted by the automaton if $c \in C_n \cap \config_F$;
+equivalently, we may say that a string is accepted if {\em there exists} a
+deterministic run, as defined earlier, where each $c_i \in C_i$, and $c_n
+\in \config_F$.
 
 \subsection{Transducers}
 
-A useful generalization of automata is from acceptors ($\Sigma^* \to 2$) to
-transducers ($\Sigma^* \to \Sigma'^*$).  Here, $\delta$ not only outputs a
+A useful generalization of automata is from acceptors ($\alphabet^* \to 2$) to
+transducers ($\alphabet^* \to \alphabet'^*$).  Here, $\delta$ not only outputs a
 new configuration, it additionally outputs (sometimes optionally) a
-character of the \defn{output alphabet} $\Sigma'$.  Nondeterministic
+character of the \defn{output alphabet} $\alphabet'$.  Nondeterministic
 transducers' transition functions typically output a set of
-configuration/character pairs ($(c, s') \in \config \times \Sigma'$).
+configuration/character pairs ($(c, s') \in \config \times \alphabet'$), but
+may sometimes be allowed to skip an emission (making $\delta : \alphabet \times
+\config \to \config \times (1+\alphabet')$) or to produce multiple output
+characters (\eg $\delta : \alphabet \times \config \to \config \times
+\alphabet'^*$).
+
+\Note{Explain ...}
+\begin{itemize}
+  \item Sequential
+  \item Unambiguous
+\end{itemize}
 
 \subsection{Weighted Automata}
 
 Related to transducers are weighted automata, which may be thought of as
 scoring or ranking input strings.  That is, rather than being indicator
-functions $\Sigma^* \to 2$, they capture functions from $\Sigma^*$ to a
+functions $\alphabet^* \to 2$, they capture functions from $\alphabet^*$ to a
 semi-ring, $R = \paren{0_R, 1_R, +_R, \times_R}$, such as $\mathbb{N}$ or
 $\mathbb{R}$.  The typical definition of a weighted string automata has
 $\delta$ producing an element of $R$ on each transition and adds two new
@@ -85,7 +99,7 @@ and cross-run $R$-sum reductions.}
 \subsection{Descriptive Taxonomy}
 
 We have said that an automaton's transition function $\delta$ has type
-$\config \times \Sigma \to \config$, but that the input and output
+$\config \times \alphabet \to \config$, but that the input and output
 configurations are often closely related.  In such a case, we may say that
 $\delta$ is \defn{characterized} by a function of a different return
 type.  What we mean by this is that the information bottleneck represented
@@ -101,19 +115,19 @@ table containing common properties.  Uncommon properties or note-worthy
 features will be left to prose.
 
 Here, we use the common table to describe itself.  Given a string $s \in
-\Sigma^*$, automata $A, A', \ldots$ and their languages $\alang{A},
-\alang{A'}, \ldots$ ($\subseteq \Sigma^*$)...
+\alphabet^*$, automata $A, A', \ldots$ and their languages $\alang{A},
+\alang{A'}, \ldots$ ($\subseteq \alphabet^*$)...
 \autinfo{
   member={$s \in \alang{A}$?},
   empty={$\alang{A} = \emptyset$?},
-  univ={$\alang{A} = \Sigma^*$?},
+  univ={$\alang{A} = \alphabet^*$?},
   finite={$\abs{\alang{A}} < \infty$?},
   equiv={$\alang{A} = \alang{A'}$?},
   subset={$\alang{A} \subseteq \alang{A'}$?},
 %
   kstar={Find $B$ s.t. $\alang{B} = \alang{A}^*$},
   kplus={Find $B$ s.t. $\alang{B} = \alang{A}^+$},
-  compl={Find $B$ s.t. $\alang{B} = \Sigma^* \setminus \alang{A}$},
+  compl={Find $B$ s.t. $\alang{B} = \alphabet^* \setminus \alang{A}$},
   relcompl={Find $B$ s.t. $\alang{B} = \alang{A} \setminus \alang{A'}$},
 %
   intersect={Find $B$ s.t. $\alang{B} = \alang{A} \cap \alang{A'}$?},

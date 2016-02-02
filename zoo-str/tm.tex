@@ -1,9 +1,10 @@
 \paragraph{Turing Machine}
 A FSM augmented with an unbounded tape.  A model of arbitrary computation.
 
-Let $\Gamma$ denote the tape alphabet (with $\Sigma \subseteq \Gamma$), then
-$\config = \sts \times \mathbb{N} \times \Gamma^\mathbb{N}$, representing
-the FSM state, the current position on the tape, and the tape contents.%
+Let $\Gamma$ denote the tape alphabet (with $\alphabet \subseteq \Gamma$),
+then $\config = \sts \times \mathbb{N} \times \Gamma^\mathbb{N}$,
+representing the FSM state, the current position on the tape, and the tape
+contents.%
 %
 \footnote{Unlike most of the other automata in the zoo, the input to a TM as
 defined here is not given character-by-character, but is encoded into the
