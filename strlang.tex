@@ -1,14 +1,14 @@
 A string language $L$ is a set of finite strings over some alphabet
-$\Sigma$.%
+$\alphabet$.%
 %
 \footnote{More formally, it is a subset of the underlying set of the free
-monoid of $\Sigma$.  Following the literature, we tend to suppress writing
-the forgetful functor, and simply refer to the set as $\Sigma^*$.}
+monoid of $\alphabet$.  Following the literature, we tend to suppress writing
+the forgetful functor, and simply refer to the set as $\alphabet^*$.}
 %
-For example, if $\Sigma = \set{a,b}$, then ``the string $a$'', ``the set of
+For example, if $\alphabet = \set{a,b}$, then ``the string $a$'', ``the set of
 strings with an even number of $a$s and an odd number of $b$s (and no other
 characters)'', and ``all strings composed of $x$ many $a$s, $y$ many $b$s,
-then $x*y$ more $a$s'' are all languages over $\Sigma$.
+then $x*y$ more $a$s'' are all languages over $\alphabet$.
 
 We may define string languages in terms of other string languages by
 \begin{enumerate}
@@ -20,9 +20,9 @@ We may define string languages in terms of other string languages by
                 $L_1 \cup L_2 \defeq \set{ s \middle\vert s \in L_1 ~\vee~ s \in L_2 }$
             \item Relative complement:
                 $L_1 \setminus L_2 \defeq \set{s \middle\vert s \in L_1 ~\wedge~ s \not\in L_2 }$
-            \item (General) complement, $L^C$: the set of strings over $\Sigma$
+            \item (General) complement, $L^C$: the set of strings over $\alphabet$
                 which are not in $L$.  We might write this as
-                $F_\text{mon}\Sigma \setminus L$ or $\Sigma^* \setminus L$
+                $F_\text{mon}\alphabet \setminus L$ or $\alphabet^* \setminus L$
                 (see below).
 
         \end{enumerate}
@@ -50,6 +50,6 @@ in the language'' ($\epsilon \in L$) and ``the language is empty'' ($L =
     \item Miscellaneous operations:
         \begin{enumerate}
             \item Concatenation: $L_1 \cdot L_2 \defeq \set{ s \cdot t \middle\vert s \in L_1 ~\wedge~ t \in L_2}$
-            \item Reversal: $L^R \defeq \set{ c_1 \ldots c_n \middle\vert c_i \in \Sigma ~\wedge~ c_n \ldots c_1 \in L }$
+            \item Reversal: $L^R \defeq \set{ c_1 \ldots c_n \middle\vert c_i \in \alphabet ~\wedge~ c_n \ldots c_1 \in L }$
         \end{enumerate}
 \end{enumerate}
