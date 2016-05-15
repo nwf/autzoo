@@ -22,11 +22,10 @@ C]{jacquemard:tamodeq} and in contradiction to the statement made in
 {\em deterministic} and {\em complete} RAs, carries over to the
 non-deterministic case as well.}
 %
-that emptiness is not decidable for the class of nondeterminstic RAs.  (This
-proof generalizes to a large class of tree automata; see
-\autoref{sec:tree-sepex:twocm}.)  We feel that a few words said about this
+that emptiness is not decidable for the class of nondeterminstic RAs.  We feel that a few words said about this
 proof here may help to de-mystify it.  A decomposition if this machine into
-simpler automata whose intersection is this machine may be found in
+simpler automata whose intersection is this machine, which demonstrates its
+applicability to a large collection of automata classes, may be found in
 \ref{sec:tree-sepex:twocm}.
 
 \begin{wrapfigure}{r}{3.5in}\centering\begin{tikzpicture}
@@ -63,9 +62,9 @@ of the machine's execution, denoted $C_i$, and h$_{i-1}$.  The equality
 constraints are introduced only at the top and at ``g'' nodes in the tree;
 the state labels are carefully constructed so that only three ranks are
 required to satisfy the Reduction metaconstraint: a base rank, which
-includes all labels in the $C_i$ trees is $\le$ a ``g''-state rank which
+includes all labels in the $C_i$ trees, is $\le$ a ``g''-state rank, which
 includes the labels of all ``g'' and ``h'' nodes in the tree except the
-apex; the accepting state at the root is the sole member of the third rank.
-There will be $2^{n-i}$ copies of $h_i$ (or $C_i$) in a tree encoding $n$
-steps.  This construction is {\em deeply} dependent on the fact that
+apex, and the accepting state at the root is the sole member of the third
+rank.  There will be $2^{n-i}$ copies of $h_i$ (or $C_i$) in a tree encoding
+$n$ steps.  This construction is {\em deeply} dependent on the fact that
 non-determinism allows equal trees to have several distinct runs. 

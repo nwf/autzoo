@@ -49,7 +49,7 @@ transition process.}
 Now a run of our nondeterministic machine looks like $C_0 s_1 C_1 \ldots s_n
 C_n$ where each $C_i \subseteq \config$ and $c' \in C_{i+1}$ iff $\exists_{c
 \in C_i} . c' \in \delta\paren{c,s_{i+1}}$.  We consider the string
-$\vec{s}$ accepted by the automaton if $c \in C_n \cap \config_F$;
+$\vec{s}$ accepted by the automaton if $C_n \cap \config_F \ne \emptyset$;
 equivalently, we may say that a string is accepted if {\em there exists} a
 deterministic run, as defined earlier, where each $c_i \in C_i$, and $c_n
 \in \config_F$.
@@ -130,8 +130,8 @@ Here, we use the common table to describe itself.  Given a string $s \in
   compl={Find $B$ s.t. $\alang{B} = \alphabet^* \setminus \alang{A}$},
   relcompl={Find $B$ s.t. $\alang{B} = \alang{A} \setminus \alang{A'}$},
 %
-  intersect={Find $B$ s.t. $\alang{B} = \alang{A} \cap \alang{A'}$?},
-  union={Find $B$ s.t.  $\alang{B} = \alang{A} \cup \alang{A'}$?},
+  intersect={Find $B$ s.t. $\alang{B} = \alang{A} \cap \alang{A'}$},
+  union={Find $B$ s.t.  $\alang{B} = \alang{A} \cup \alang{A'}$},
 %
   hom={Find $B$ for hom. $h$ s.t. $\alang{B} = h\paren{\alang{A}}$},
   invhom={Find $B$ for hom. $h$ s.t. $\alang{A} = h\paren{\alang{B}}$},
@@ -153,11 +153,16 @@ Here, we use the common table to describe itself.  Given a string $s \in
 Of course, not every row in the table is independent of the others.  The
 following implications (at least) hold in all cases:
 \begin{itemize}
-	\item Subset testing implies equivalence testing.
-	\item Relative complement closure implies general complement closure.
-	\item Intersection and general complement closures implies
-          relative complement closure.  If, additionally, a class has
-          a decidable emptiness test, then it has a decidable subset test.
+	\item Subset testing implies equivalence testing, of which universality
+          and emptiness testing are often special cases (some automata
+          families may not be able to represent $\emptyset$ or
+          $\alphabet^*$).
+	\item Relative complement closure implies general complement closure, assuming $\alphabet^*$ is expessible.
+	\item Intersection and general complement closures imply
+          relative complement closure.
+    \item If a class has relative complement closure and a decidable emptiness test,
+          then it has a decidable subset test:
+          $S \subseteq T \Leftrightarrow S \setminus T = \emptyset$.
 	\item Closure under arbitrary homomorphism implies closure under
           $\epsilon$-free homomorphisms.
 \end{itemize}
